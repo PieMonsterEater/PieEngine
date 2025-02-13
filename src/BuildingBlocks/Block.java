@@ -26,6 +26,7 @@ public class Block extends GameObject {
 		this.setID(ID.Block);
 		this.handler = handler;
 		bounds = createBounds();
+		this.solid = true;
 	}
 	
 	public Block(int x, int y, double theta, Handler handler) {

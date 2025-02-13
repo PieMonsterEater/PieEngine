@@ -73,9 +73,7 @@ public class LevelLoader {
 		for(int i = handler.object.size() - 1; i >= 0; i--) {
 			GameObject tempObject = handler.object.get(i);
 			
-			if(tempObject.getID() == ID.Block) handler.removeObj(tempObject);
-			if(tempObject.getID() == ID.Enemy) handler.removeObj(tempObject);
-			if(tempObject.getID() == ID.Flag) handler.removeObj(tempObject);
+			if(!tempObject.dontDestroyOnLoad) handler.removeObj(tempObject);
 		}
 	}
 	

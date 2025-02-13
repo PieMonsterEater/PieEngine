@@ -81,7 +81,7 @@ public class Game extends Canvas implements Runnable {
 	
 	public void destructGame() {
 		ll.reset();
-		handler.object.remove(0);
+		if(handler.object.size() > 0) handler.object.remove(0);
 		this.lastMenu = mainM;
 		this.currentMenu = mainM;
 		Game.state = StateID.MainMenu;
