@@ -65,11 +65,11 @@ public class MouseInput implements MouseListener {
 		
 		//Rectangle mRect = new Rectangle(mx, my, 1, 1);
 		
-		Game.currentMenu.setMouseActive(true);
+		game.currentMenu.setMouseActive(true);
 	}
 
 	public void mouseReleased(MouseEvent arg0) {
-		Game.currentMenu.setMouseActive(false);
+		game.currentMenu.setMouseActive(false);
 		
 	}
 

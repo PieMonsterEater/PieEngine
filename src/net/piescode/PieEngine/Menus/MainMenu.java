@@ -38,8 +38,8 @@ public class MainMenu extends Menu {
 		}
 		
 		playButton = new PlayButton(game, Game.WIDTH/3 + 35, 100, 100, 50, "Play");
-		infoButton = new MenuChangeButton(game, Game.WIDTH/3 + 35, 175, 100, 50, "Info", Game.iMenu);
-		optionsButton = new MenuChangeButton(game, Game.WIDTH/4 + 50, 250, 190, 50, "Options", Game.iMenu);
+		infoButton = new MenuChangeButton(game, Game.WIDTH/3 + 35, 175, 100, 50, "Info", game.iMenu);
+		optionsButton = new MenuChangeButton(game, Game.WIDTH/4 + 50, 250, 190, 50, "Options", game.iMenu);
 		quitButton = new QuitButton(game, Game.WIDTH/3 + 35, 325, 100, 50, "Quit");
 		
 		buttons.add(playButton);

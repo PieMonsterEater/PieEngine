@@ -12,7 +12,6 @@ import net.piescode.PieEngine.Menus.StateID;
 public class KeyInput extends KeyAdapter {
 
 	private Handler handler;
-	private Player player;
 	private Game game;
 	
 	//0 = UP, 1 = DOWN, 2 = RIGHT, 3 = LEFT
@@ -55,7 +54,7 @@ public class KeyInput extends KeyAdapter {
 		
 		if(key == KeyEvent.VK_ESCAPE) {
 			if(Game.state == StateID.Play) Game.state = StateID.PlayMenu;
-			game.setMenu(Game.lastMenu);
+			game.setMenu(game.lastMenu);
 		}
 }
 	

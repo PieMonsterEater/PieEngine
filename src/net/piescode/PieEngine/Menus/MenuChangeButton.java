@@ -15,9 +15,7 @@ public class MenuChangeButton extends Button {
 
 	
 	public void action() {
-		Game.lastMenu = Game.currentMenu;
-		Game.currentMenu = switchMenu;
-		
+		game.setMenu(switchMenu);
 	}
 	
 	public void setMenu(Menu menu) {

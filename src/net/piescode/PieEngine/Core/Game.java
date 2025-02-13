@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
+import java.util.ArrayList;
 
 import net.piescode.PieEngine.Audio.MusicPlayer;
 import net.piescode.PieEngine.Entities.Enemy;
@@ -26,7 +27,7 @@ public class Game extends Canvas implements Runnable {
 	
 	public static final int SCALE=100;
 	public static final int WIDTH = 640, HEIGHT = 480;
-	public static StateID state = StateID.MainMenu;
+	public static StateID state;
 	public static LevelLoader ll;
 	public boolean running = false;
 	
@@ -34,13 +35,14 @@ public class Game extends Canvas implements Runnable {
 	private Handler handler;
 	private MusicPlayer mp;
 	
-	public static MainMenu mainM;
-	public static InfoMenu iMenu;
-	public static PlayMenu pMenu;
+	public MainMenu mainM;
+	public InfoMenu iMenu;
+	public PlayMenu pMenu;
 	
-	public static Menu currentMenu;
-	public static Menu lastMenu;
+	public Menu currentMenu;
+	public Menu lastMenu;
 
+	public ArrayList<Menu> prevMenus;
 	
 	Camera camera = new Camera(0, 0);;
 	
@@ -62,12 +64,16 @@ public class Game extends Canvas implements Runnable {
 		currentMenu = mainM;
 		lastMenu = currentMenu;
 		
+		this.state = StateID.MainMenu;
+		
+		prevMenus = new ArrayList<Menu>();
+		
 		new Window("PieEngine", WIDTH, HEIGHT, this);
 	}
 	
 	public void initGame() {
-		Game.lastMenu = pMenu;
-		Game.currentMenu = pMenu;
+		this.lastMenu = pMenu;
+		this.currentMenu = pMenu;
 		this.state = StateID.Play;
 		handler.addObj(new Player(100, 100, handler));
 		ll.nextLevel();
@@ -76,9 +82,9 @@ public class Game extends Canvas implements Runnable {
 	public void destructGame() {
 		ll.reset();
 		handler.object.remove(0);
-		Game.lastMenu = mainM;
-		Game.currentMenu = mainM;
-		Game.state = StateID.Menus;
+		this.lastMenu = mainM;
+		this.currentMenu = mainM;
+		Game.state = StateID.MainMenu;
 	}
 	
 	public synchronized void start() {
@@ -177,13 +183,15 @@ public class Game extends Canvas implements Runnable {
 	}
 	
 	public void setMenu(Menu menu) {
-		this.lastMenu = currentMenu;
-		this.currentMenu = menu;
+		prevMenus.add(currentMenu);
+		currentMenu = menu;
 	}
 	
-	public void setMenu(Menu menu, Menu lastMenu) {
-		this.lastMenu = lastMenu;
-		this.currentMenu = menu;
+	public void backMenu() {
+		if(prevMenus.size() == 0) return;
+		
+		currentMenu = prevMenus.get(prevMenus.size() - 1);
+		prevMenus.remove(prevMenus.size() - 1);
 	}
 
 }

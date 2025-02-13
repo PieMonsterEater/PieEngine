@@ -19,7 +19,7 @@ public class PlayMenu extends Menu {
 
 
 		playButton = new ReGameBtn(game, Game.WIDTH/4 - 50, 150, 375, 50, "Return to Game");
-		optionsButton = new MenuChangeButton(game, Game.WIDTH/4 + 50, 250, 190, 50, "Options", Game.iMenu);
+		optionsButton = new MenuChangeButton(game, Game.WIDTH/4 + 50, 250, 190, 50, "Options", game.iMenu);
 		quitButton = new QtMainBtn(game, Game.WIDTH/3 + 35, 350, 100, 50, "Quit");
 		
 		buttons.add(playButton);
