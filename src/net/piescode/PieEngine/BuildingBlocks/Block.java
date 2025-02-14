@@ -1,4 +1,4 @@
-package BuildingBlocks;
+package net.piescode.PieEngine.BuildingBlocks;
 
 import java.awt.Color;
 import java.awt.Graphics;

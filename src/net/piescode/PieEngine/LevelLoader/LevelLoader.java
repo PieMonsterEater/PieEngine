@@ -3,7 +3,7 @@ package net.piescode.PieEngine.LevelLoader;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
-import BuildingBlocks.Block;
+import net.piescode.PieEngine.BuildingBlocks.Block;
 import net.piescode.PieEngine.Entities.Enemy;
 import net.piescode.PieEngine.Entities.Flag;
 import net.piescode.PieEngine.EntityCore.GameObject;

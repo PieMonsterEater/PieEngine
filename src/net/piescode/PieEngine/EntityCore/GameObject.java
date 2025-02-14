@@ -8,8 +8,8 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
-import BuildingBlocks.Block;
 import net.piescode.PieEngine.Audio.SoundEffect;
+import net.piescode.PieEngine.BuildingBlocks.Block;
 import net.piescode.PieEngine.Visuals.Animator;
 import net.piescode.PieEngine.Visuals.BufferedImageLoader;
 import net.piescode.PieEngine.Visuals.SpriteSheet;

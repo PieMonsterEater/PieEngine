@@ -9,7 +9,7 @@ import java.awt.geom.Area;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
-import BuildingBlocks.Block;
+import net.piescode.PieEngine.BuildingBlocks.Block;
 import net.piescode.PieEngine.EntityCore.GameObject;
 import net.piescode.PieEngine.EntityCore.Handler;
 import net.piescode.PieEngine.EntityCore.ID;
