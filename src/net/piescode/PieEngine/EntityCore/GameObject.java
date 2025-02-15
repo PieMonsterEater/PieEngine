@@ -178,7 +178,7 @@ public abstract class GameObject {
 		double adjacent = overlap.x + overlap.width/2 - centerX;
 		double opposite = overlap.y + overlap.height/2 - centerY;
 		
-		System.out.println("adjacent: " + adjacent);
+		//System.out.println("adjacent: " + adjacent);
 		
 		double hypLength = Math.sqrt(adjacent*adjacent + opposite*opposite);
 

@@ -21,11 +21,6 @@ public class Player extends GameObject {
 	
 	private Handler handler;
 	
-	private double testTheta = 0;
-	private double testHyp = 0;
-	private int eCenterX = 0;
-	private int eCenterY = 0;
-	
 	private BufferedImage[] idleDown = new BufferedImage[2];
 	private BufferedImage[] idleUp = new BufferedImage[2];
 	private BufferedImage[] idleRight = new BufferedImage[2];
@@ -97,11 +92,6 @@ public class Player extends GameObject {
 		g.drawRect(x, y, 32, 48);
 		
 		g.drawImage(sprite, x - 16, y - 10, 64, 64, null);
-		
-		g.drawLine(0, 0, (int) (testHyp*Math.cos(testTheta)), (int) (testHyp*Math.sin(testTheta)));
-		
-		g.setColor(Color.RED);
-		g.drawRect((int) (testHyp*Math.cos(testTheta)), (int) (testHyp*Math.sin(testTheta)), 0, 0);
 	}
 	
 	public void collision() {
