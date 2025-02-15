@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import net.piescode.PieEngine.BuildingBlocks.Block;
+import net.piescode.PieEngine.BuildingBlocks.Ellipse;
 import net.piescode.PieEngine.Entities.Enemy;
 import net.piescode.PieEngine.Entities.Flag;
 import net.piescode.PieEngine.EntityCore.GameObject;
@@ -84,6 +85,7 @@ public class LevelLoader {
 		case 1: handler.addObj(new Block(0, 100, handler));
 				handler.addObj(new Block(100, 0, 45, handler));
 				handler.addObj(new Block(200, 100, 15, 45, 70, handler));
+				handler.addObj(new Ellipse(100, 200, 150f, 45f, handler));
 				for(int i = 0; i < handler.object.size(); i++) {
 					GameObject tempObject = handler.object.get(i);
 					

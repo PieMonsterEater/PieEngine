@@ -90,7 +90,7 @@ public class Block extends GameObject {
 		
 	}
 	
-	public Shape createBounds() {
+	private Shape createBounds() {
 		Rectangle bounds = new Rectangle(x, y, length, height);
 		AffineTransform at = AffineTransform.getRotateInstance(theta, x, y);
 		Shape rotatedBounds = at.createTransformedShape(bounds);

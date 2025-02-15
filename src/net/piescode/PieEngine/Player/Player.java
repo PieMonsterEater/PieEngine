@@ -10,6 +10,7 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
 import net.piescode.PieEngine.BuildingBlocks.Block;
+import net.piescode.PieEngine.BuildingBlocks.Ellipse;
 import net.piescode.PieEngine.EntityCore.GameObject;
 import net.piescode.PieEngine.EntityCore.Handler;
 import net.piescode.PieEngine.EntityCore.ID;
@@ -19,6 +20,11 @@ public class Player extends GameObject {
 	public static final int IDLE_DOWN = 0, IDLE_UP = 1, IDLE_RIGHT = 2, IDLE_LEFT = 3, WALK_DOWN = 5, WALK_UP = 6, WALK_RIGHT = 7, WALK_LEFT = 8;
 	
 	private Handler handler;
+	
+	private double testTheta = 0;
+	private double testHyp = 0;
+	private int eCenterX = 0;
+	private int eCenterY = 0;
 	
 	private BufferedImage[] idleDown = new BufferedImage[2];
 	private BufferedImage[] idleUp = new BufferedImage[2];
@@ -91,13 +97,18 @@ public class Player extends GameObject {
 		g.drawRect(x, y, 32, 48);
 		
 		g.drawImage(sprite, x - 16, y - 10, 64, 64, null);
+		
+		g.drawLine(0, 0, (int) (testHyp*Math.cos(testTheta)), (int) (testHyp*Math.sin(testTheta)));
+		
+		g.setColor(Color.RED);
+		g.drawRect((int) (testHyp*Math.cos(testTheta)), (int) (testHyp*Math.sin(testTheta)), 0, 0);
 	}
 	
 	public void collision() {
 	for(int i = 0; i < handler.object.size(); i++) {
 		GameObject tempObject = handler.object.get(i);
 		
-			if(tempObject.getID() == ID.Block) collideWithBlocks((Block) tempObject);
+			collideWithEnvironment(tempObject);
 	}
 	}
 	
