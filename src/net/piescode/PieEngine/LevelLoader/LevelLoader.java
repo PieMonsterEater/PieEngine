@@ -79,7 +79,7 @@ public class LevelLoader {
 	}
 	
 	public void nextLevel() {
-		levelCounter++;
+		//levelCounter++;
 		levelCounter++;
 		switch(levelCounter) {
 		case 1: handler.addObj(new Block(0, 100, handler));
