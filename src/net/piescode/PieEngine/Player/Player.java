@@ -14,6 +14,7 @@ import net.piescode.PieEngine.BuildingBlocks.Ellipse;
 import net.piescode.PieEngine.EntityCore.GameObject;
 import net.piescode.PieEngine.EntityCore.Handler;
 import net.piescode.PieEngine.EntityCore.ID;
+import net.piescode.PieEngine.Utils.Pair;
 
 public class Player extends GameObject {
 	
@@ -95,11 +96,11 @@ public class Player extends GameObject {
 	}
 	
 	public void collision() {
-	for(int i = 0; i < handler.object.size(); i++) {
-		GameObject tempObject = handler.object.get(i);
-		
+		for(int i = 0; i < handler.object.size(); i++) {
+			GameObject tempObject = handler.object.get(i);
+			
 			collideWithEnvironment(tempObject);
-	}
+		}
 	}
 	
 	public void switchAnimation(int animation) {

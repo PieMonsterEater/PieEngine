@@ -5,11 +5,13 @@ import java.io.IOException;
 
 import net.piescode.PieEngine.BuildingBlocks.Block;
 import net.piescode.PieEngine.BuildingBlocks.Ellipse;
+import net.piescode.PieEngine.BuildingBlocks.Triangle;
 import net.piescode.PieEngine.Entities.Enemy;
 import net.piescode.PieEngine.Entities.Flag;
 import net.piescode.PieEngine.EntityCore.GameObject;
 import net.piescode.PieEngine.EntityCore.Handler;
 import net.piescode.PieEngine.EntityCore.ID;
+import net.piescode.PieEngine.Utils.Pair;
 import net.piescode.PieEngine.Visuals.BufferedImageLoader;
 
 public class LevelLoader {
@@ -56,9 +58,10 @@ public class LevelLoader {
 					}
 					if(red == 156 && green == 157 && blue == 128) handler.addObj(new Block(x*32, y*32, 32, 32, 0, handler));
 					if(red == 246 && green == 255 && blue == 0) handler.addObj(new Flag(x*32, y*32, handler));
+					if(red == 50 && green == 50 && blue == 50) handler.addObj(new Ellipse(x*32, y*32, 45f, 45f, handler));
 					
 					if(red == 156 && green == 128 && blue == 146) {
-						Block b = new Block(x*32, y*32, 45, 15, 0, handler);
+						Block b = new Block(x*32, y*32, 90, 15, 0, handler);
 						b.setThetaChange(Math.toRadians(1));
 						handler.addObj(b);
 						}
@@ -79,13 +82,14 @@ public class LevelLoader {
 	}
 	
 	public void nextLevel() {
-		//levelCounter++;
 		levelCounter++;
 		switch(levelCounter) {
 		case 1: handler.addObj(new Block(0, 100, handler));
 				handler.addObj(new Block(100, 0, 45, handler));
 				handler.addObj(new Block(200, 100, 15, 45, 70, handler));
 				handler.addObj(new Ellipse(100, 200, 45f, 45f, handler));
+				handler.addObj(new Triangle(300, 100, new Pair<Integer, Double>(32, 45d), new Pair<Integer, Double>(32, -30d), handler));
+				handler.addObj(new Flag(0, 400, handler));
 				for(int i = 0; i < handler.object.size(); i++) {
 					GameObject tempObject = handler.object.get(i);
 					

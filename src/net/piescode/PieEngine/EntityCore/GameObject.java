@@ -51,8 +51,7 @@ public abstract class GameObject {
 			e.printStackTrace();
 		}
 		
-		ss = new SpriteSheet(spriteSheet);
-		
+		ss = new SpriteSheet(spriteSheet);	
 	}
 	
 	public void setAnimation(BufferedImage[] images, int delay) {
