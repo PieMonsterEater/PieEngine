@@ -50,6 +50,11 @@ public class LevelLoader {
 					}
 					if(red == 255 && green == 0 && blue == 0) handler.addObj(new Enemy(x*32, y*32, handler));
 					if(red == 128 && green == 128 && blue == 128) handler.addObj(new Block(x*32, y*32, handler));
+					if(red == 128 && green == 128 && blue == 128) handler.addObj(new Block(x*32, y*32, handler));
+					if(red == 128 && green == 132 && blue == 128) handler.addObj(new Triangle(x*32, (y*32) + 32, new Pair<Integer, Double>(33, -90d), new Pair<Integer, Double>(33, 0d), handler));
+					if(red == 128 && green == 136 && blue == 128) handler.addObj(new Triangle((x*32) + 32, (y*32) + 32, new Pair<Integer, Double>(33, -90d), new Pair<Integer, Double>(33, 180d), handler));
+					if(red == 128 && green == 140 && blue == 128) handler.addObj(new Triangle(x*32, y*32, new Pair<Integer, Double>(33, 90d), new Pair<Integer, Double>(33, 0d), handler));
+					if(red == 128 && green == 144 && blue == 128) handler.addObj(new Triangle((x*32) + 32, y*32, new Pair<Integer, Double>(33, 90d), new Pair<Integer, Double>(33, 180d), handler));
 					if(red == 156 && green == 128 && blue == 128) handler.addObj(new Block(x*32, y*32, 45, 25, 45, handler));
 					if(red == 156 && green == 145 && blue == 128) {
 						//handler.addObj(new Block(x*32, y*32, 32, 32, 0, handler));
@@ -88,7 +93,7 @@ public class LevelLoader {
 				handler.addObj(new Block(100, 0, 45, handler));
 				handler.addObj(new Block(200, 100, 15, 45, 70, handler));
 				handler.addObj(new Ellipse(100, 200, 45f, 45f, handler));
-				handler.addObj(new Triangle(300, 100, new Pair<Integer, Double>(32, 45d), new Pair<Integer, Double>(32, -30d), handler));
+				handler.addObj(new Triangle(300, 100, new Pair<Integer, Double>(32, -90d), new Pair<Integer, Double>(32, 0d), handler));
 				handler.addObj(new Flag(0, 400, handler));
 				for(int i = 0; i < handler.object.size(); i++) {
 					GameObject tempObject = handler.object.get(i);
@@ -99,10 +104,12 @@ public class LevelLoader {
 					}
 				}
 				break;
-		case 2: this.loadLevel("res/level.png");
+		case 2: this.loadLevel("res/levels/level3.png");
 				break;
-		case 3: this.loadLevel("res/level2.png");
-		break;
+		case 3: this.loadLevel("res/levels/level2.png");
+				break;
+		case 4: this.loadLevel("res/levels/level3.png");
+				break;
 		}
 	}
 	

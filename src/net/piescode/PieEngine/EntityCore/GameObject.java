@@ -11,6 +11,7 @@ import java.io.IOException;
 import net.piescode.PieEngine.Audio.SoundEffect;
 import net.piescode.PieEngine.BuildingBlocks.Block;
 import net.piescode.PieEngine.BuildingBlocks.Ellipse;
+import net.piescode.PieEngine.BuildingBlocks.Triangle;
 import net.piescode.PieEngine.Utils.Pair;
 import net.piescode.PieEngine.Visuals.Animator;
 import net.piescode.PieEngine.Visuals.BufferedImageLoader;
@@ -160,11 +161,99 @@ public abstract class GameObject {
 			return new Pair<Double, Double>(0d, 0d);
 		}
 		
+		if(obj instanceof Triangle) {
+			Triangle t = (Triangle) obj;
+			
+			//Uses a slightly less resource heavy version of collision detection if this object has a Rectangle hitbox
+			if(getBounds() instanceof Rectangle) {
+				if(t.getBounds().intersects((Rectangle2D) getBounds())) {
+					return handleTriangleCollision(t);
+				}
+			
+				return new Pair<Double, Double>(0d, 0d);
+			}
+		
+			//Uses the default Shape collision with areas which is more resource intensive by checking if there is any overlap in the areas of the hitboxes
+			Area collisionArea = new Area(this.getBounds());
+			collisionArea.intersect(new Area(t.getBounds()));
+		
+			if(!collisionArea.isEmpty()) return handleTriangleCollision(t);
+			return new Pair<Double, Double>(0d, 0d);
+		}
+		
 		return new Pair<Double, Double>(0d, 0d);
 		
 	}
 	
-	private Pair<Double, Double> handleEllipseCollision(Ellipse e) {
+	private Pair<Double, Double> handleTriangleCollision(Triangle t) {
+		double pushX = 0;
+		double pushY = 0;
+		double movXFlag = 0; // Represents how far you would have to move in the push direction to make the x overlap 0
+		double movYFlag = 0; // Represents how far you would have to move in the push direction to make the y overlap 0
+		
+		// Create the areas for the different collision boxes
+		Area objArea = new Area(getBounds());
+		Area overlapArea = new Area(t.getBounds());
+		Area area12 = new Area(t.getBounds12());
+		Area area13 = new Area(t.getBounds13());
+		Area area23 = new Area(t.getBounds23());
+		
+		// Find the which areas have overlap
+		area12.intersect(objArea);
+		area13.intersect(objArea);
+		area23.intersect(objArea);
+		overlapArea.intersect(objArea);
+		
+		// Numerical Areas
+		double area12Number = area12.getBounds().width*area12.getBounds().height;
+		double area13Number = area13.getBounds().width*area13.getBounds().height;
+		double area23Number = area23.getBounds().width*area23.getBounds().height;
+		
+		// Create the push vector
+		if(!area12.isEmpty() && area12Number > area13Number && area12Number > area23Number) {
+			pushX += t.getNormal12().getX();
+			pushY += t.getNormal12().getY();
+		}
+		
+		if(!area13.isEmpty() && area13Number > area12Number && area13Number > area23Number) {
+			pushX += t.getNormal13().getX();
+			pushY += t.getNormal13().getY();
+		}
+		
+		if(!area23.isEmpty() && area23Number > area12Number && area23Number > area13Number) {
+			pushX += t.getNormal23().getX();
+			pushY += t.getNormal23().getY();
+		}
+		
+		// Normalize the push vector
+		double pushLength = Math.sqrt(pushX*pushX + pushY*pushY);
+		
+		if(pushLength == 0) return new Pair<Double, Double>(0d, 0d); // Sometimes get problematic NaN errors from the next operations without this
+		
+		pushX /= pushLength;
+		pushY /= pushLength;
+		
+		// Find which is smaller, and apply the push vector at that length
+		movXFlag = overlapArea.getBounds().width/pushX; // How far in the push direction do I need to move to zero-out x-axis overlap
+		movYFlag = overlapArea.getBounds().height/pushY; // How far in the push direction do I need to move to zero-out y-axis overlap
+		
+		if(movXFlag < 0) movXFlag *= -1;
+		if(movYFlag < 0) movYFlag *= -1;
+		
+		// Using the smaller of the two to push
+		if(movXFlag < movYFlag && movXFlag != 0 || movYFlag == 0) { pushX*= movXFlag; pushY *= movXFlag; }
+		else if(movYFlag != 0) { pushX*= movYFlag; pushY *= movYFlag; }
+		
+		// Actually move the player
+		setX(getX() + (int)pushX);
+		setY(getY() + (int)pushY);
+		
+		if(movXFlag < movYFlag & movXFlag != 0 || movYFlag == 0) return new Pair<Double, Double>(pushX/movXFlag, pushY/movXFlag);
+		else if(movYFlag != 0) return new Pair<Double, Double>(pushX/movYFlag, pushY/movYFlag);
+		return new Pair<Double, Double>(0d, 0d);
+	}
+	
+ 	private Pair<Double, Double> handleEllipseCollision(Ellipse e) {
 		double pushX = 0;
 		double pushY = 0;
 		double movXFlag = 0;
@@ -312,7 +401,7 @@ public abstract class GameObject {
 			}
 	
 			if(!(Math.sin(theta) < 0.00001) || !(Math.sin(theta) > -0.00001)) {
-			movYFlag = overlap.height/Math.sin(theta);
+				movYFlag = overlap.height/Math.sin(theta);
 			}
 	
 	

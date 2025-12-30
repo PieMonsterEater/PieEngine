@@ -42,13 +42,14 @@ public class Enemy extends GameObject {
 		for(int i = 0; i < handler.object.size(); i++) {
 			GameObject tempObject = handler.object.get(i);
 			
-			// Accumulates all of the different directions the player was pushed on this frame
+			// Accumulates all of the different directions the enemy was pushed on this frame
 			Pair<Double, Double> currCollideVector = collideWithEnvironment(tempObject);
 			collideVector = new Pair<Double, Double>(collideVector.getX() + currCollideVector.getX(), collideVector.getY() + currCollideVector.getY());
 		}
 		
 		// Normalize the resulting vector
 		double collideVectorLength = Math.sqrt(collideVector.getX()*collideVector.getX() + collideVector.getY()*collideVector.getY());
+		//System.out.println("Before normal collideX: " + collideVector.getX() + ", collideY: " + collideVector.getY());
 		collideVector = new Pair<Double, Double>(collideVector.getX()/collideVectorLength, collideVector.getY()/collideVectorLength);
 		
 		if(collideVectorLength != 0) {
@@ -56,7 +57,8 @@ public class Enemy extends GameObject {
 			setVelX((int)(collideVector.getX() * Math.sqrt(8)));
 			setVelY((int)(collideVector.getY() * Math.sqrt(8)));
 			
-			//System.out.println("newVelX: " + newVelX + " newVelY: " + newVelY);
+			//System.out.println("collideX: " + collideVector.getX() + ", collideY: " + collideVector.getY());
+			//System.out.println("velX: " + getVelX() + ", velY: " + getVelY());
 		}
 	}
 	
