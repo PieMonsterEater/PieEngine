@@ -23,6 +23,7 @@ public class Ellipse extends GameObject {
 		this.height = height;
 		
 		createBounds();
+		this.solid = true;
 	}
 
 	public void tick() {

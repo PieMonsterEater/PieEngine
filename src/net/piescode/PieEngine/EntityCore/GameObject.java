@@ -22,8 +22,7 @@ public abstract class GameObject {
 	protected int x, y, velX, velY, currentAnimation;
 	protected ID id;
 	protected BufferedImage sprite;
-	protected BufferedImage spriteSheet;
-	protected SpriteSheet ss;
+	protected String spriteSheet;
 	protected Animator ani;
 	protected SoundEffect se;
 	protected boolean animating = false;
@@ -34,6 +33,7 @@ public abstract class GameObject {
 	
 	public boolean dontDestroyOnLoad = false;
 	public boolean solid = false;
+	public boolean doImageClipping = false;
 	
 	public GameObject(int x, int y, Handler handler) {
 		this.x = x;
@@ -44,15 +44,7 @@ public abstract class GameObject {
 	}
 	
 	public void setSpriteSheet(String spriteLocal) {
-		BufferedImageLoader loader = new BufferedImageLoader();
-		
-		try {
-			spriteSheet = loader.loadImage(spriteLocal);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		ss = new SpriteSheet(spriteSheet);	
+		spriteSheet = spriteLocal;
 	}
 	
 	public void setAnimation(BufferedImage[] images, int delay) {
@@ -66,7 +58,7 @@ public abstract class GameObject {
 	}
 	
 	public void setSprite(int pixelX, int pixelY, int pixelWidth, int pixelHeight) {
-		sprite = ss.grabSprite(pixelX, pixelY, pixelWidth, pixelHeight);
+		sprite = SpriteSheet.grabSprite(spriteSheet, pixelX, pixelY, pixelWidth, pixelHeight);
 	}
 	
 	public void animate() {
@@ -120,7 +112,7 @@ public abstract class GameObject {
 	// Gives all GameObjects a simple method to implement to collide with the environment
 	// Returns the vector that pushes the object out
 	protected Pair<Double, Double> collideWithEnvironment(GameObject obj) {
-		
+		if(!obj.solid) return new Pair<Double, Double>(0d, 0d);
 		if(obj instanceof Block) {
 			Block b = (Block) obj;
 			

@@ -15,6 +15,7 @@ import net.piescode.PieEngine.EntityCore.GameObject;
 import net.piescode.PieEngine.EntityCore.Handler;
 import net.piescode.PieEngine.EntityCore.ID;
 import net.piescode.PieEngine.Utils.Pair;
+import net.piescode.PieEngine.Visuals.SpriteSheet;
 
 public class Player extends GameObject {
 	
@@ -36,40 +37,40 @@ public class Player extends GameObject {
 		super(x, y, handler);
 		this.handler = handler;
 		this.setID(ID.Player);
-		this.setSpriteSheet("res/Guy.png");
+		this.setSpriteSheet("res/textures/Guy.png");
 		this.dontDestroyOnLoad = true;
 		
-		idleDown[0] = ss.grabSprite(0, 0, 32, 32);
-		idleDown[1] = ss.grabSprite(32, 0, 32, 32);
+		idleDown[0] = SpriteSheet.grabSprite(spriteSheet, 0, 0, 32, 32);
+		idleDown[1] = SpriteSheet.grabSprite(spriteSheet, 32, 0, 32, 32);
 		
-		idleUp[0] = ss.grabSprite(0, 32, 32, 32);
-		idleUp[1] = ss.grabSprite(32, 32, 32, 32);
+		idleUp[0] = SpriteSheet.grabSprite(spriteSheet, 0, 32, 32, 32);
+		idleUp[1] = SpriteSheet.grabSprite(spriteSheet, 32, 32, 32, 32);
 		
-		idleRight[0] = ss.grabSprite(0, 64, 32, 32);
-		idleRight[1] = ss.grabSprite(32, 64, 32, 32);
+		idleRight[0] = SpriteSheet.grabSprite(spriteSheet, 0, 64, 32, 32);
+		idleRight[1] = SpriteSheet.grabSprite(spriteSheet, 32, 64, 32, 32);
 		
-		idleLeft[0] = ss.grabSprite(0, 96, 32, 32);
-		idleLeft[1] = ss.grabSprite(32, 96, 32, 32);
+		idleLeft[0] = SpriteSheet.grabSprite(spriteSheet, 0, 96, 32, 32);
+		idleLeft[1] = SpriteSheet.grabSprite(spriteSheet, 32, 96, 32, 32);
 		
-		walkDown[0] = ss.grabSprite(65, 0, 32, 32);
-		walkDown[1] = ss.grabSprite(0, 0, 32, 32);
-		walkDown[2] = ss.grabSprite(98, 0, 32, 32);
-		walkDown[3] = ss.grabSprite(0, 0, 32, 32);
+		walkDown[0] = SpriteSheet.grabSprite(spriteSheet, 65, 0, 32, 32);
+		walkDown[1] = SpriteSheet.grabSprite(spriteSheet, 0, 0, 32, 32);
+		walkDown[2] = SpriteSheet.grabSprite(spriteSheet, 98, 0, 32, 32);
+		walkDown[3] = SpriteSheet.grabSprite(spriteSheet, 0, 0, 32, 32);
 		
-		walkUp[0] = ss.grabSprite(65, 32, 32, 32);
-		walkUp[1] = ss.grabSprite(0, 32, 32, 32);
-		walkUp[2] = ss.grabSprite(98, 32, 32, 32);
-		walkUp[3] = ss.grabSprite(0, 32, 32, 32);
+		walkUp[0] = SpriteSheet.grabSprite(spriteSheet, 65, 32, 32, 32);
+		walkUp[1] = SpriteSheet.grabSprite(spriteSheet, 0, 32, 32, 32);
+		walkUp[2] = SpriteSheet.grabSprite(spriteSheet, 98, 32, 32, 32);
+		walkUp[3] = SpriteSheet.grabSprite(spriteSheet, 0, 32, 32, 32);
 		
-		walkRight[0] = ss.grabSprite(65, 64, 32, 32);
-		walkRight[1] = ss.grabSprite(0, 64, 32, 32);
-		walkRight[2] = ss.grabSprite(98, 64, 32, 32);
-		walkRight[3] = ss.grabSprite(0, 64, 32, 32);
+		walkRight[0] = SpriteSheet.grabSprite(spriteSheet, 65, 64, 32, 32);
+		walkRight[1] = SpriteSheet.grabSprite(spriteSheet, 0, 64, 32, 32);
+		walkRight[2] = SpriteSheet.grabSprite(spriteSheet, 98, 64, 32, 32);
+		walkRight[3] = SpriteSheet.grabSprite(spriteSheet, 0, 64, 32, 32);
 		
-		walkLeft[0] = ss.grabSprite(65, 96, 32, 32);
-		walkLeft[1] = ss.grabSprite(0, 96, 32, 32);
-		walkLeft[2] = ss.grabSprite(98, 96, 32, 32);
-		walkLeft[3] = ss.grabSprite(0, 96, 32, 32);
+		walkLeft[0] = SpriteSheet.grabSprite(spriteSheet, 65, 96, 32, 32);
+		walkLeft[1] = SpriteSheet.grabSprite(spriteSheet, 0, 96, 32, 32);
+		walkLeft[2] = SpriteSheet.grabSprite(spriteSheet, 98, 96, 32, 32);
+		walkLeft[3] = SpriteSheet.grabSprite(spriteSheet, 0, 96, 32, 32);
 		
 		this.currentAnimation = IDLE_DOWN;
 		this.setAnimation(idleDown, 20);

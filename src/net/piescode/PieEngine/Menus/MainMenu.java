@@ -31,7 +31,7 @@ public class MainMenu extends Menu {
 		//quitButtonRect = new Rectangle(Game.WIDTH/3 + 35, 350, 100, 50);
 		
 		try {
-			titleImage = bil.loadImage("res/Pie Engine Title.png");
+			titleImage = bil.loadImage("res/textures/Pie Engine Title.png");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
