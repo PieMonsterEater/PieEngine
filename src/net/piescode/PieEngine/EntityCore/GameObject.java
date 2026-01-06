@@ -15,6 +15,7 @@ import net.piescode.PieEngine.BuildingBlocks.Triangle;
 import net.piescode.PieEngine.Utils.Pair;
 import net.piescode.PieEngine.Visuals.Animator;
 import net.piescode.PieEngine.Visuals.BufferedImageLoader;
+import net.piescode.PieEngine.Visuals.RenderingLayer;
 import net.piescode.PieEngine.Visuals.SpriteSheet;
 
 
@@ -26,18 +27,25 @@ public abstract class GameObject {
 	protected Animator ani;
 	protected SoundEffect se;
 	protected boolean animating = false;
+	protected RenderingLayer renderinglayer;
 	
+	// Methods every game object needs
 	public abstract void tick();
 	public abstract void render(Graphics g);
 	public abstract Shape getBounds();
+	public abstract void createChildObjects();
+	public abstract void destroyChildObjects();
+	
+	public void animate() {}
 	
 	public boolean dontDestroyOnLoad = false;
 	public boolean solid = false;
 	public boolean doImageClipping = false;
 	
-	public GameObject(int x, int y, Handler handler) {
+	public GameObject(int x, int y, RenderingLayer renderingLayer, Handler handler) {
 		this.x = x;
 		this.y = y;
+		this.renderinglayer = renderingLayer;
 		
 		ani = new Animator();
 		se = new SoundEffect();
@@ -59,10 +67,6 @@ public abstract class GameObject {
 	
 	public void setSprite(int pixelX, int pixelY, int pixelWidth, int pixelHeight) {
 		sprite = SpriteSheet.grabSprite(spriteSheet, pixelX, pixelY, pixelWidth, pixelHeight);
-	}
-	
-	public void animate() {
-		
 	}
 	
 	public int getX() {
@@ -107,6 +111,10 @@ public abstract class GameObject {
 
 	public void setSpr(BufferedImage sprite) {
 		this.sprite = sprite;
+	}
+	
+	public RenderingLayer getRenderingLayer() {
+		return renderinglayer;
 	}
 	
 	// Gives all GameObjects a simple method to implement to collide with the environment

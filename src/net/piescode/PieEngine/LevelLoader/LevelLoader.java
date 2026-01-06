@@ -13,6 +13,7 @@ import net.piescode.PieEngine.EntityCore.Handler;
 import net.piescode.PieEngine.EntityCore.ID;
 import net.piescode.PieEngine.Utils.Pair;
 import net.piescode.PieEngine.Visuals.BufferedImageLoader;
+import net.piescode.PieEngine.Visuals.RenderingLayer;
 
 public class LevelLoader {
 	
@@ -42,8 +43,8 @@ public class LevelLoader {
 					int blue = (pixel) & 0xff;
 					
 					if(red == 0 && green == 38 && blue == 255) {
-						for(int i = 0; i < handler.object.size(); i++) {
-							GameObject tempObject = handler.object.get(i);
+						for(int i = 0; i < handler.getSize(); i++) {
+							GameObject tempObject = handler.getObj(i);
 							
 							if(tempObject.getID() == ID.Player) {
 								tempObject.setX(x*32);
@@ -51,39 +52,45 @@ public class LevelLoader {
 							}
 						}
 					}
-					if(red == 255 && green == 0 && blue == 0) handler.addObj(new Enemy(x*STANDARD_WIDTH, y*STANDARD_HEIGHT, handler));
-					if(red == 128 && green == 128 && blue == 128) handler.addObj(new Block(x*STANDARD_WIDTH, y*STANDARD_HEIGHT, null, handler));
-					if(red == 128 && green == 128 && blue == 128) handler.addObj(new Block(x*STANDARD_WIDTH, y*STANDARD_HEIGHT, null, handler));
+					if(red == 255 && green == 0 && blue == 0) handler.addObj(new Enemy(x*STANDARD_WIDTH, y*STANDARD_HEIGHT, RenderingLayer.MIDDLEGROUND, handler));
+					if(red == 128 && green == 128 && blue == 128) handler.addObj(new Block(x*STANDARD_WIDTH, y*STANDARD_HEIGHT, null, RenderingLayer.FOREGROUND, handler));
+					if(red == 128 && green == 128 && blue == 128) handler.addObj(new Block(x*STANDARD_WIDTH, y*STANDARD_HEIGHT, null, RenderingLayer.FOREGROUND, handler));
 					if(red == 194 && green == 125 && blue == 0) {
-						Block woodenPlank = new Block(x*STANDARD_WIDTH, y*STANDARD_HEIGHT, Block.WOODEN_PLANK, handler);
+						Block woodenPlank = new Block(x*STANDARD_WIDTH, y*STANDARD_HEIGHT, Block.WOODEN_PLANK, RenderingLayer.BACKGROUND, handler);
 						woodenPlank.solid = false;
 						
 						handler.addObj(woodenPlank);
 					}
-					if(red == 128 && green == 132 && blue == 128) handler.addObj(new Triangle(x*STANDARD_WIDTH, y*STANDARD_HEIGHT, 0, STANDARD_OFFSETY, new Pair<Integer, Double>(32, -90d), new Pair<Integer, Double>(32, 0d), Block.WOODEN_PLANK, handler));
-					if(red == 128 && green == 136 && blue == 128) handler.addObj(new Triangle(x*STANDARD_WIDTH, y*STANDARD_HEIGHT, STANDARD_OFFSETX, STANDARD_OFFSETY, new Pair<Integer, Double>(32, -90d), new Pair<Integer, Double>(32, 180d), Block.WOODEN_PLANK, handler));
-					if(red == 128 && green == 140 && blue == 128) handler.addObj(new Triangle(x*STANDARD_WIDTH, y*STANDARD_HEIGHT, new Pair<Integer, Double>(32, 0d), new Pair<Integer, Double>(32, 90d), Block.WOODEN_PLANK, handler));
-					if(red == 128 && green == 144 && blue == 128) handler.addObj(new Triangle(x*STANDARD_WIDTH, y*STANDARD_HEIGHT, STANDARD_OFFSETX, 0, new Pair<Integer, Double>(32, 90d), new Pair<Integer, Double>(32, 180d), Block.WOODEN_PLANK, handler));
+					if(red == 255 && green == 125 && blue == 0) {
+						Block woodenPlank = new Block(x*STANDARD_WIDTH, y*STANDARD_HEIGHT, Block.WOODEN_PLANK, RenderingLayer.FOREGROUND, handler);
+						woodenPlank.solid = false;
+						
+						handler.addObj(woodenPlank);
+					}
+					if(red == 128 && green == 132 && blue == 128) handler.addObj(new Triangle(x*STANDARD_WIDTH, y*STANDARD_HEIGHT, 0, STANDARD_OFFSETY, new Pair<Integer, Double>(32, -90d), new Pair<Integer, Double>(32, 0d), Block.WOODEN_PLANK, RenderingLayer.FOREGROUND, handler));
+					if(red == 128 && green == 136 && blue == 128) handler.addObj(new Triangle(x*STANDARD_WIDTH, y*STANDARD_HEIGHT, STANDARD_OFFSETX, STANDARD_OFFSETY, new Pair<Integer, Double>(32, -90d), new Pair<Integer, Double>(32, 180d), Block.WOODEN_PLANK, RenderingLayer.FOREGROUND, handler));
+					if(red == 128 && green == 140 && blue == 128) handler.addObj(new Triangle(x*STANDARD_WIDTH, y*STANDARD_HEIGHT, new Pair<Integer, Double>(32, 0d), new Pair<Integer, Double>(32, 90d), Block.WOODEN_PLANK, RenderingLayer.FOREGROUND, handler));
+					if(red == 128 && green == 144 && blue == 128) handler.addObj(new Triangle(x*STANDARD_WIDTH, y*STANDARD_HEIGHT, STANDARD_OFFSETX, 0, new Pair<Integer, Double>(32, 90d), new Pair<Integer, Double>(32, 180d), Block.WOODEN_PLANK, RenderingLayer.FOREGROUND, handler));
 					if(red == 128 && green == 148 && blue == 128) {
-						Triangle rotatingTriangle = new Triangle(x*x*STANDARD_WIDTH, y*STANDARD_HEIGHT, new Pair<Integer, Double>(32, -90d), new Pair<Integer, Double>(32, 0d), Block.WOODEN_PLANK, handler);
+						Triangle rotatingTriangle = new Triangle(x*STANDARD_WIDTH, y*STANDARD_HEIGHT, new Pair<Integer, Double>(32, -90d), new Pair<Integer, Double>(32, 0d), Block.WOODEN_PLANK, RenderingLayer.FOREGROUND, handler);
 						rotatingTriangle.setThetaChange(1);
 						handler.addObj(rotatingTriangle);
 						}
-					if(red == 128 && green == 152 && blue == 128) handler.addObj(new Triangle(x*STANDARD_WIDTH, y*STANDARD_HEIGHT, 0, STANDARD_OFFSETY, new Pair<Integer, Double>(40, 55d), new Pair<Integer, Double>(150, 330d), null, handler));
-					if(red == 128 && green == 156 && blue == 128) handler.addObj(new Triangle(x*STANDARD_WIDTH, y*STANDARD_HEIGHT, 0, STANDARD_OFFSETY, new Pair<Integer, Double>(40, 145d), new Pair<Integer, Double>(150, 330d), null, handler));
-					if(red == 128 && green == 160 && blue == 128) handler.addObj(new Triangle(x*STANDARD_WIDTH, y*STANDARD_HEIGHT, new Pair<Integer, Double>(40, 235d), new Pair<Integer, Double>(150, 330d), null, handler));
-					if(red == 156 && green == 128 && blue == 128) handler.addObj(new Block(x*STANDARD_WIDTH, y*STANDARD_HEIGHT, 45, 25, 45, null, handler));
+					if(red == 128 && green == 152 && blue == 128) handler.addObj(new Triangle(x*STANDARD_WIDTH, y*STANDARD_HEIGHT, 0, STANDARD_OFFSETY, new Pair<Integer, Double>(40, 55d), new Pair<Integer, Double>(150, 330d), null, RenderingLayer.FOREGROUND, handler));
+					if(red == 128 && green == 156 && blue == 128) handler.addObj(new Triangle(x*STANDARD_WIDTH, y*STANDARD_HEIGHT, 0, STANDARD_OFFSETY, new Pair<Integer, Double>(40, 145d), new Pair<Integer, Double>(150, 330d), null, RenderingLayer.FOREGROUND, handler));
+					if(red == 128 && green == 160 && blue == 128) handler.addObj(new Triangle(x*STANDARD_WIDTH, y*STANDARD_HEIGHT, new Pair<Integer, Double>(40, 235d), new Pair<Integer, Double>(150, 330d), null, RenderingLayer.FOREGROUND, handler));
+					if(red == 156 && green == 128 && blue == 128) handler.addObj(new Block(x*STANDARD_WIDTH, y*STANDARD_HEIGHT, 45, 25, 45, null, RenderingLayer.FOREGROUND, handler));
 					if(red == 156 && green == 145 && blue == 128) {
 						//handler.addObj(new Block(x*32, y*32, 32, 32, 0, handler));
 						//handler.addObj(new Block(x*32, y*32, 32, 15, 0, handler));
-						handler.addObj(new Block(x*STANDARD_WIDTH, y*STANDARD_HEIGHT, 45, 25, 225, null, handler));
+						handler.addObj(new Block(x*STANDARD_WIDTH, y*STANDARD_HEIGHT, 45, 25, 225, null, RenderingLayer.FOREGROUND, handler));
 					}
-					if(red == 156 && green == 157 && blue == 128) handler.addObj(new Block(x*STANDARD_WIDTH, y*STANDARD_HEIGHT, STANDARD_WIDTH, STANDARD_HEIGHT, 0, null, handler));
-					if(red == 246 && green == 255 && blue == 0) handler.addObj(new Flag(x*STANDARD_WIDTH, y*STANDARD_HEIGHT, handler));
-					if(red == 50 && green == 50 && blue == 50) handler.addObj(new Ellipse(x*STANDARD_WIDTH, y*STANDARD_HEIGHT, 45f, 45f, handler));
+					if(red == 156 && green == 157 && blue == 128) handler.addObj(new Block(x*STANDARD_WIDTH, y*STANDARD_HEIGHT, STANDARD_WIDTH, STANDARD_HEIGHT, 0, null, RenderingLayer.FOREGROUND, handler));
+					if(red == 246 && green == 255 && blue == 0) handler.addObj(new Flag(x*STANDARD_WIDTH, y*STANDARD_HEIGHT, RenderingLayer.FOREGROUND, handler));
+					if(red == 50 && green == 50 && blue == 50) handler.addObj(new Ellipse(x*STANDARD_WIDTH, y*STANDARD_HEIGHT, 45f, 45f, Block.WOODEN_PLANK, RenderingLayer.FOREGROUND, handler));
 					
 					if(red == 156 && green == 128 && blue == 146) {
-						Block b = new Block(x*STANDARD_WIDTH, y*STANDARD_HEIGHT, 90, 15, 0, null, handler);
+						Block b = new Block(x*STANDARD_WIDTH, y*STANDARD_HEIGHT, 90, 15, 0, null, RenderingLayer.FOREGROUND, handler);
 						b.setThetaChange(Math.toRadians(1));
 						handler.addObj(b);
 						}
@@ -96,8 +103,8 @@ public class LevelLoader {
 	}
 	
 	public void clear() {
-		for(int i = handler.object.size() - 1; i >= 0; i--) {
-			GameObject tempObject = handler.object.get(i);
+		for(int i = handler.getSize() - 1; i >= 0; i--) {
+			GameObject tempObject = handler.getObj(i);
 			
 			if(!tempObject.dontDestroyOnLoad) handler.removeObj(tempObject);
 		}
@@ -106,14 +113,14 @@ public class LevelLoader {
 	public void nextLevel() {
 		levelCounter++;
 		switch(levelCounter) {
-		case 2: handler.addObj(new Block(0, 100, null, handler));
-				handler.addObj(new Block(100, 0, 45, null, handler));
-				handler.addObj(new Block(200, 100, 15, 45, 70, null, handler));
-				handler.addObj(new Ellipse(100, 200, 45f, 45f, handler));
-				handler.addObj(new Triangle(300, 100, new Pair<Integer, Double>(32, -90d), new Pair<Integer, Double>(32, 0d), null, handler));
-				handler.addObj(new Flag(0, 400, handler));
-				for(int i = 0; i < handler.object.size(); i++) {
-					GameObject tempObject = handler.object.get(i);
+		case 0: handler.addObj(new Block(0, 100, null, RenderingLayer.FOREGROUND, handler));
+				handler.addObj(new Block(100, 0, 45, null, RenderingLayer.FOREGROUND, handler));
+				handler.addObj(new Block(200, 100, 15, 45, 70, null, RenderingLayer.FOREGROUND, handler));
+				handler.addObj(new Ellipse(100, 200, 45f, 45f, null, RenderingLayer.FOREGROUND, handler));
+				handler.addObj(new Triangle(300, 100, new Pair<Integer, Double>(32, -90d), new Pair<Integer, Double>(32, 0d), null, RenderingLayer.FOREGROUND, handler));
+				handler.addObj(new Flag(0, 400, RenderingLayer.FOREGROUND, handler));
+				for(int i = 0; i < handler.getSize(); i++) {
+					GameObject tempObject = handler.getObj(i);
 					
 					if(tempObject.getID() == ID.Player) {
 						tempObject.setX(100);
@@ -121,11 +128,11 @@ public class LevelLoader {
 					}
 				}
 				break;
-		case 1: this.loadLevel("res/levels/house.png");
+		case 1: this.loadLevel("res/levels/level.png");
 				break;
-		case 3: this.loadLevel("res/levels/level2.png");
+		case 2: this.loadLevel("res/levels/level2.png");
 				break;
-		case 4: this.loadLevel("res/levels/level3.png");
+		case 3: this.loadLevel("res/levels/level3.png");
 				break;
 		}
 	}

@@ -8,13 +8,14 @@ import net.piescode.PieEngine.Core.Game;
 import net.piescode.PieEngine.EntityCore.GameObject;
 import net.piescode.PieEngine.EntityCore.Handler;
 import net.piescode.PieEngine.EntityCore.ID;
+import net.piescode.PieEngine.Visuals.RenderingLayer;
 
 public class Flag extends GameObject {
 
 	private Handler handler;
 	
-	public Flag(int x, int y, Handler handler) {
-		super(x, y, handler);
+	public Flag(int x, int y, RenderingLayer renderinglayer, Handler handler) {
+		super(x, y, renderinglayer, handler);
 		this.handler = handler;
 		this.setID(ID.Flag);
 	}
@@ -29,8 +30,8 @@ public class Flag extends GameObject {
 	}
 	
 	public void collision() {
-		for(int i = 0; i < handler.object.size(); i++) {
-			GameObject tempObject = handler.object.get(i);
+		for(int i = 0; i < handler.getSize(); i++) {
+			GameObject tempObject = handler.getObj(i);
 			
 			if(tempObject.getID() == ID.Player) {
 				if(getBounds().intersects((Rectangle) tempObject.getBounds())) { 
@@ -45,4 +46,7 @@ public class Flag extends GameObject {
 		return new Rectangle(x, y, 32, 32);
 	}
 
+	
+	public void createChildObjects() {}
+	public void destroyChildObjects() {}
 }

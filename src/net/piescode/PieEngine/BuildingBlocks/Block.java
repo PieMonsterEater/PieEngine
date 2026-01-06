@@ -14,6 +14,7 @@ import net.piescode.PieEngine.EntityCore.Handler;
 import net.piescode.PieEngine.EntityCore.ID;
 import net.piescode.PieEngine.LevelLoader.LevelLoader;
 import net.piescode.PieEngine.Player.Player;
+import net.piescode.PieEngine.Visuals.RenderingLayer;
 import net.piescode.PieEngine.Visuals.SpriteSheet;
 
 public class Block extends GameObject {
@@ -26,8 +27,8 @@ public class Block extends GameObject {
 	
 	public static final BufferedImage WOODEN_PLANK = SpriteSheet.grabSprite("res/textures/blocks.png", 0, 0, 32, 32);
 
-	public Block(int x, int y, BufferedImage sprite, Handler handler) {
-		super(x, y, handler);
+	public Block(int x, int y, BufferedImage sprite, RenderingLayer renderinglayer, Handler handler) {
+		super(x, y, renderinglayer, handler);
 		this.setID(ID.Block);
 		this.handler = handler;
 		this.sprite = sprite;
@@ -35,8 +36,8 @@ public class Block extends GameObject {
 		this.solid = true;
 	}
 	
-	public Block(int x, int y, double theta, BufferedImage sprite, Handler handler) {
-		super(x, y, handler);
+	public Block(int x, int y, double theta, BufferedImage sprite, RenderingLayer renderinglayer, Handler handler) {
+		super(x, y, renderinglayer, handler);
 		this.setID(ID.Block);
 		this.theta = Math.toRadians(theta);
 		this.handler = handler;
@@ -45,8 +46,8 @@ public class Block extends GameObject {
 		this.solid = true;
 	}
 	
-	public Block(int x, int y, int length, int height, double theta, BufferedImage sprite, Handler handler) {
-		super(x, y, handler);
+	public Block(int x, int y, int length, int height, double theta, BufferedImage sprite, RenderingLayer renderinglayer, Handler handler) {
+		super(x, y, renderinglayer, handler);
 		this.setID(ID.Block);
 		this.length = length;
 		this.height = height;
@@ -175,5 +176,6 @@ public class Block extends GameObject {
 		return thetaChange;
 	}
 	
-
+	public void createChildObjects() {}
+	public void destroyChildObjects() {}
 }

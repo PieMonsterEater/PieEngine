@@ -10,14 +10,15 @@ import net.piescode.PieEngine.EntityCore.GameObject;
 import net.piescode.PieEngine.EntityCore.Handler;
 import net.piescode.PieEngine.EntityCore.ID;
 import net.piescode.PieEngine.Utils.Pair;
+import net.piescode.PieEngine.Visuals.RenderingLayer;
 
 public class Enemy extends GameObject {
 	
 	private Handler handler;
 	private boolean touching = false;
 
-	public Enemy(int x, int y, Handler handler) {
-		super(x, y, handler);
+	public Enemy(int x, int y, RenderingLayer renderinglayer, Handler handler) {
+		super(x, y, renderinglayer, handler);
 		this.handler = handler;
 		this.setID(ID.Enemy);
 		
@@ -39,8 +40,8 @@ public class Enemy extends GameObject {
 
 	public void collision() {
 		Pair<Double, Double> collideVector = new Pair<>(0d, 0d); // Tracks the direction in which the player is pushed by a collision on a frame
-		for(int i = 0; i < handler.object.size(); i++) {
-			GameObject tempObject = handler.object.get(i);
+		for(int i = 0; i < handler.getSize(); i++) {
+			GameObject tempObject = handler.getObj(i);
 			
 			// Accumulates all of the different directions the enemy was pushed on this frame
 			Pair<Double, Double> currCollideVector = collideWithEnvironment(tempObject);
@@ -66,4 +67,7 @@ public class Enemy extends GameObject {
 		return new Rectangle(x, y, 16, 16);
 	}
 
+	
+	public void createChildObjects() {}
+	public void destroyChildObjects() {}
 }

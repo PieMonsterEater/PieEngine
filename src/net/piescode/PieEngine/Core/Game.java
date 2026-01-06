@@ -22,6 +22,7 @@ import net.piescode.PieEngine.Player.KeyInput;
 import net.piescode.PieEngine.Player.MouseInput;
 import net.piescode.PieEngine.Player.MouseMoveInput;
 import net.piescode.PieEngine.Player.Player;
+import net.piescode.PieEngine.Visuals.RenderingLayer;
 
 public class Game extends Canvas implements Runnable {
 	
@@ -29,6 +30,7 @@ public class Game extends Canvas implements Runnable {
 	public static final int WIDTH = 640, HEIGHT = 480;
 	public static StateID state;
 	public static LevelLoader ll;
+	public static KeyInput keyInput;
 	public boolean running = false;
 	
 	private Thread thread;
@@ -44,13 +46,14 @@ public class Game extends Canvas implements Runnable {
 
 	public ArrayList<Menu> prevMenus;
 	
-	Camera camera = new Camera(0, 0);;
+	Camera camera = new Camera(0, 0);
 	
 	public Game() {
 		handler = new Handler();
 		//handler.addObj(new Player(100, 100, handler));
 		//handler.addObj(new Enemy(250, 250, handler));
-		this.addKeyListener(new KeyInput(handler, this));
+		keyInput = new KeyInput(handler, this);
+		this.addKeyListener(keyInput);
 		this.addMouseListener(new MouseInput(handler, this));
 		this.addMouseMotionListener(new MouseMoveInput(this));
 		ll = new LevelLoader(handler);
@@ -75,13 +78,13 @@ public class Game extends Canvas implements Runnable {
 		this.lastMenu = pMenu;
 		this.currentMenu = pMenu;
 		this.state = StateID.Play;
-		handler.addObj(new Player(100, 100, handler));
+		handler.addObj(new Player(100, 100, RenderingLayer.PLAYER, handler));
 		ll.nextLevel();
 	}
 	
 	public void destructGame() {
 		ll.reset();
-		if(handler.object.size() > 0) handler.object.remove(0);
+		if(handler.getSize() > 0) handler.removeObj(0);
 		this.lastMenu = mainM;
 		this.currentMenu = mainM;
 		Game.state = StateID.MainMenu;
@@ -136,8 +139,8 @@ public class Game extends Canvas implements Runnable {
 	public void tick() {
 		if(this.state == StateID.Play) {
 		handler.tick();
-		for(int i =0; i < handler.object.size(); i++) {
-			if(handler.object.get(i).getID() == ID.Player) camera.tick(handler.object.get(i));
+		for(int i =0; i < handler.getSize(); i++) {
+			if(handler.getObj(i).getID() == ID.Player) camera.tick(handler.getObj(i));
 		}
 		} else {
 			currentMenu.tick();
@@ -179,7 +182,6 @@ public class Game extends Canvas implements Runnable {
 	
 	public static void main(String[] args) {
 		new Game();
-
 	}
 	
 	public void setMenu(Menu menu) {

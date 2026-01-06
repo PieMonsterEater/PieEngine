@@ -13,6 +13,7 @@ import java.awt.image.BufferedImage;
 import net.piescode.PieEngine.EntityCore.GameObject;
 import net.piescode.PieEngine.EntityCore.Handler;
 import net.piescode.PieEngine.Utils.Pair;
+import net.piescode.PieEngine.Visuals.RenderingLayer;
 
 public class Triangle extends GameObject {
 	
@@ -28,8 +29,8 @@ public class Triangle extends GameObject {
 	Pair<Double, Double> v12, v13, v23 = null; // Holds the vectors for each of the sides
 	Pair<Double, Double> n12, n13, n23 = null; // Holds the normal vectors for each of the sides
 	
-	public Triangle(int x, int y, Pair<Integer, Double> p2, Pair<Integer, Double> p3, BufferedImage sprite, Handler handler) {
-		super(x, y, handler);
+	public Triangle(int x, int y, Pair<Integer, Double> p2, Pair<Integer, Double> p3, BufferedImage sprite, RenderingLayer renderinglayer, Handler handler) {
+		super(x, y, renderinglayer, handler);
 		
 		this.p2 = forceAngle360(p2);
 		this.p3 = forceAngle360(p3);
@@ -41,8 +42,8 @@ public class Triangle extends GameObject {
 		this.doImageClipping = true;
 	}
 	
-	public Triangle(int x, int y, int offsetX, int offsetY, Pair<Integer, Double> p2, Pair<Integer, Double> p3, BufferedImage sprite, Handler handler) {
-		super(x, y, handler);
+	public Triangle(int x, int y, int offsetX, int offsetY, Pair<Integer, Double> p2, Pair<Integer, Double> p3, BufferedImage sprite, RenderingLayer renderinglayer, Handler handler) {
+		super(x, y, renderinglayer, handler);
 		
 		this.offsetX = offsetX;
 		this.offsetY = offsetY;
@@ -228,4 +229,7 @@ public class Triangle extends GameObject {
 		return thetaChange;
 	}
 
+	
+	public void createChildObjects() {}
+	public void destroyChildObjects() {}
 }

@@ -15,6 +15,7 @@ import net.piescode.PieEngine.EntityCore.GameObject;
 import net.piescode.PieEngine.EntityCore.Handler;
 import net.piescode.PieEngine.EntityCore.ID;
 import net.piescode.PieEngine.Utils.Pair;
+import net.piescode.PieEngine.Visuals.RenderingLayer;
 import net.piescode.PieEngine.Visuals.SpriteSheet;
 
 public class Player extends GameObject {
@@ -33,8 +34,8 @@ public class Player extends GameObject {
 	private BufferedImage[] walkRight = new BufferedImage[4];
 	private BufferedImage[] walkLeft = new BufferedImage[4];
 	
-	public Player(int x, int y, Handler handler) {
-		super(x, y, handler);
+	public Player(int x, int y, RenderingLayer renderingLayer, Handler handler) {
+		super(x, y, renderingLayer, handler);
 		this.handler = handler;
 		this.setID(ID.Player);
 		this.setSpriteSheet("res/textures/Guy.png");
@@ -90,15 +91,15 @@ public class Player extends GameObject {
 
 	public void render(Graphics g) {
 		Graphics2D g2d = (Graphics2D) g;
-		g.setColor(Color.BLUE);
-		g.drawRect(x, y, 32, 48);
+		//g.setColor(Color.BLUE);
+		//g.drawRect(x, y, 32, 48);
 		
 		g.drawImage(sprite, x - 16, y - 10, 64, 64, null);
 	}
 	
 	public void collision() {
-		for(int i = 0; i < handler.object.size(); i++) {
-			GameObject tempObject = handler.object.get(i);
+		for(int i = 0; i < handler.getSize(); i++) {
+			GameObject tempObject = handler.getObj(i);
 			
 			collideWithEnvironment(tempObject);
 		}
@@ -139,5 +140,11 @@ public class Player extends GameObject {
 	public Rectangle getBounds() {
 		return new Rectangle(x, y, 32, 48);
 	}
+	
+	public void handleKeyPresses() {
+		
+	}
 
+	public void createChildObjects() {}
+	public void destroyChildObjects() {}
 }
