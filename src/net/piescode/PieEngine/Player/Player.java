@@ -35,6 +35,8 @@ public class Player extends GameObject {
 	private BufferedImage[] walkRight = new BufferedImage[4];
 	private BufferedImage[] walkLeft = new BufferedImage[4];
 	
+	Block childBlock = null;
+	
 	public Player(int x, int y, RenderingLayer renderingLayer, Handler handler) {
 		super(x, y, renderingLayer, handler);
 		this.handler = handler;
@@ -78,6 +80,8 @@ public class Player extends GameObject {
 		this.setAnimation(idleDown, 20);
 		
 		Game.keyInput.setPlayer(this);
+		
+		createChildObjects();
 	}
 
 	public void tick() {
@@ -90,6 +94,10 @@ public class Player extends GameObject {
 		this.setSpr(ani.getImage());
 		
 		collision();
+		
+		childBlock.setX(getX());
+		childBlock.setY(getY());
+		childBlock.tick();
 	}
 
 	public void render(Graphics g) {
@@ -103,6 +111,8 @@ public class Player extends GameObject {
 	public void collision() {
 		for(int i = 0; i < handler.getSize(); i++) {
 			GameObject tempObject = handler.getObj(i);
+			
+			if(tempObject == childBlock) continue;
 			
 			collideWithEnvironment(tempObject);
 		}
@@ -148,6 +158,15 @@ public class Player extends GameObject {
 		
 	}
 
-	public void createChildObjects() {}
-	public void destroyChildObjects() {}
+	public void createChildObjects() {
+		childBlock = new Block(getX(), getY(), 32, 48, 0, null, RenderingLayer.BACKGROUND, handler);
+		childBlock.isTickable = false;
+		childBlock.isRenderable = true;
+		childBlock.dontDestroyOnLoad = true;
+		
+		handler.addObj(childBlock);
+	}
+	public void destroyChildObjects() {
+		handler.removeObj(childBlock);
+	}
 }

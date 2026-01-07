@@ -77,13 +77,23 @@ public class Handler {
 	private void clearPendingRemovals() {
 		System.out.println("Pending Removal: " + pendingRemoval.size());
 		
+		 // Ensures that the last object doesn't simply swap with itself
+
+		if(this.objects.size() == 1) {
+			GameObject toRemove = pendingRemoval.removeLast();
+			this.objects.remove(toRemove);
+			this.renderObjects.get(toRemove.renderinglayer.ordinal()).remove(toRemove);
+			this.indexHash.remove(toRemove);
+			return;
+		} 
+		
 		for(int i = pendingRemoval.size() - 1; i >= 0; i--) {
 			GameObject tempObject = pendingRemoval.get(i);
 			Pair<Integer, Integer> removeIndicies = indexHash.get(tempObject);
 			
 			// This prevents an error if an object was added to the pending removal list twice
 			// Or prevents us trying to remove an object that was never added in the first place
-			if(removeIndicies == null) continue; 
+			if(removeIndicies == null) {pendingRemoval.removeLast(); continue;} 
 			
 			// Remove from objects
 			GameObject lastObject = this.objects.removeLast();

@@ -84,7 +84,6 @@ public class Game extends Canvas implements Runnable {
 	
 	public void destructGame() {
 		ll.reset();
-		if(handler.getSize() > 0) handler.removeObj(0);
 		handler.tick(); // This has to be here so the handler properly removes everything
 		this.lastMenu = mainM;
 		this.currentMenu = mainM;

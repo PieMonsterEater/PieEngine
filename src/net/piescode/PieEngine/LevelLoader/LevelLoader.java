@@ -138,7 +138,12 @@ public class LevelLoader {
 	}
 	
 	public void reset() {
-		clear();
+		for(int i = handler.getSize() - 1; i >= 0; i--) {
+			GameObject tempObject = handler.getObj(i);
+			
+			handler.removeObj(tempObject);
+		}
+		
 		levelCounter = 0;
 	}
 	
