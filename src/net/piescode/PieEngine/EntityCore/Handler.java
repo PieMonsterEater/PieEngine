@@ -2,87 +2,109 @@ package net.piescode.PieEngine.EntityCore;
 
 import java.awt.Graphics;
 import java.util.ArrayList;
-import java.util.LinkedList;
+import java.util.IdentityHashMap;
 
-import net.piescode.PieEngine.Core.Game;
-import net.piescode.PieEngine.Player.Player;
+import net.piescode.PieEngine.Utils.Pair;
+import net.piescode.PieEngine.Visuals.RenderingLayer;
 
 
 public class Handler {
-	private ArrayList<GameObject> tickObjects = new ArrayList<GameObject>();
-	private ArrayList<GameObject> renderObjects = new ArrayList<GameObject>();
+	private IdentityHashMap<GameObject, Pair<Integer, Integer>> indexHash = new IdentityHashMap<GameObject, Pair<Integer, Integer>>();
+	private ArrayList<GameObject> objects = new ArrayList<GameObject>();
+	private ArrayList<ArrayList<GameObject>> renderObjects = createRenderingArray();
+	private ArrayList<GameObject> pendingRemoval = new ArrayList<GameObject>();
 	
 	public void tick()  {
-		for (int i = 0; i < tickObjects.size(); i++) {
-			GameObject tempObject = tickObjects.get(i);
+		for (int i = 0; i < objects.size(); i++) {
+			GameObject tempObject = objects.get(i);
 			
-			tempObject.tick();
+			if(tempObject.isTickable && !tempObject.markedForDeath) tempObject.tick();
 		}
+		
+		// Kill objects
+		if(!pendingRemoval.isEmpty()) clearPendingRemovals();
 	}
 	
 	public void render(Graphics g) {
 		for (int i = 0; i < renderObjects.size(); i++) {
-			GameObject tempObject = renderObjects.get(i);
-	
-			tempObject.render(g);
+			ArrayList<GameObject> renderLayer = renderObjects.get(i);
+			for(int j = 0; j < renderLayer.size(); j++) {
+				GameObject tempObject = renderLayer.get(j);
+				
+				if(tempObject.isRenderable) tempObject.render(g);
+			}
 		}
 	}
 	
 	public void addObj(GameObject object) {
-		this.tickObjects.add(object);
-		addRenderObj(object);
-		
-		if(object instanceof Player) {
-			Game.keyInput.setPlayer((Player) object);
-		}
+		int renderingOrdinal = object.renderinglayer.ordinal();
+		indexHash.put(object, new Pair<Integer, Integer>(this.objects.size(), this.renderObjects.get(renderingOrdinal).size()));
+		this.objects.add(object);
+		this.renderObjects.get(renderingOrdinal).add(object);
 	}
 	
 	public void removeObj(GameObject object) {
 		object.destroyChildObjects();
-		this.tickObjects.remove(object);
-		removeRenderObj(object);
+		object.markedForDeath = true;
+		this.pendingRemoval.add(object);
 	}
 	
 	public void removeObj(int index) {
-		this.tickObjects.get(index).destroyChildObjects();
-		removeRenderObj(this.tickObjects.get(index));
-		this.tickObjects.remove(index);
+		removeObj(this.objects.get(index));
 	}
 	
 	public GameObject getObj(int index) {
-		if(index > this.tickObjects.size() - 1) return null;
+		if(index > this.objects.size() - 1) return null;
 		
-		return this.tickObjects.get(index);
+		return this.objects.get(index);
 	}
 	
 	public int getSize() {
-		return this.tickObjects.size();
+		return this.objects.size();
 	}
 	
-	// Performs a binary search to find where to insert an object in the renderer
-	// such that it renders on the proper layer
-	public void addRenderObj(GameObject object) {
-		int low = 0;
-		int high = renderObjects.size() - 1;
+	// Sets up the rendering array to have exactly as many buckets as there are rendering layers
+	public ArrayList<ArrayList<GameObject>> createRenderingArray() {
+		ArrayList<ArrayList<GameObject>> tempArray = new ArrayList<ArrayList<GameObject>>();
 		
-		while(low <= high) {
-			int mid = low + (high - low)/2;
-			
-			if(renderObjects.get(mid).getRenderingLayer().ordinal() == object.getRenderingLayer().ordinal()) {
-				renderObjects.add(mid + 1, object);
-				return;
-			}
-			else if(renderObjects.get(mid).getRenderingLayer().ordinal() < object.getRenderingLayer().ordinal()) {
-				low = mid + 1;
-			}
-			else high = mid - 1;
+		for(RenderingLayer layer : RenderingLayer.values()) {
+			tempArray.add(new ArrayList<GameObject>());
 		}
 		
-		// There is no object on the same rendering layer in the list yet
-		this.renderObjects.add(low, object);
+		return tempArray;
 	}
 	
-	public void removeRenderObj(GameObject object) {
-		this.renderObjects.remove(object);
+	private void clearPendingRemovals() {
+		System.out.println("Pending Removal: " + pendingRemoval.size());
+		
+		for(int i = pendingRemoval.size() - 1; i >= 0; i--) {
+			GameObject tempObject = pendingRemoval.get(i);
+			Pair<Integer, Integer> removeIndicies = indexHash.get(tempObject);
+			
+			// This prevents an error if an object was added to the pending removal list twice
+			// Or prevents us trying to remove an object that was never added in the first place
+			if(removeIndicies == null) continue; 
+			
+			// Remove from objects
+			GameObject lastObject = this.objects.removeLast();
+			if(tempObject != lastObject) {
+				Pair<Integer, Integer> lastObjectIndicies = indexHash.get(lastObject);
+				this.objects.set(removeIndicies.getX(), lastObject);
+				indexHash.put(lastObject, new Pair<Integer, Integer>(removeIndicies.getX(), lastObjectIndicies.getY()));
+			}
+			
+			
+			// Remove from the renderer
+			ArrayList<GameObject> renderLayer = this.renderObjects.get(tempObject.renderinglayer.ordinal());
+			lastObject = renderLayer.removeLast();
+			if(tempObject != lastObject) {
+				Pair<Integer, Integer> lastObjectIndicies = indexHash.get(lastObject);
+				renderLayer.set(removeIndicies.getY(), lastObject);
+				indexHash.put(lastObject, new Pair<Integer, Integer>(lastObjectIndicies.getX(), removeIndicies.getY()));
+			}
+			
+			// Remove from helper lists
+			indexHash.remove(pendingRemoval.removeLast());
+		}
 	}
 }

@@ -6,7 +6,6 @@ import java.awt.Shape;
 import java.awt.geom.Area;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 
 import net.piescode.PieEngine.Audio.SoundEffect;
 import net.piescode.PieEngine.BuildingBlocks.Block;
@@ -14,7 +13,6 @@ import net.piescode.PieEngine.BuildingBlocks.Ellipse;
 import net.piescode.PieEngine.BuildingBlocks.Triangle;
 import net.piescode.PieEngine.Utils.Pair;
 import net.piescode.PieEngine.Visuals.Animator;
-import net.piescode.PieEngine.Visuals.BufferedImageLoader;
 import net.piescode.PieEngine.Visuals.RenderingLayer;
 import net.piescode.PieEngine.Visuals.SpriteSheet;
 
@@ -41,6 +39,9 @@ public abstract class GameObject {
 	public boolean dontDestroyOnLoad = false;
 	public boolean solid = false;
 	public boolean doImageClipping = false;
+	public boolean isTickable = true;
+	public boolean isRenderable = true;
+	public boolean markedForDeath = false;
 	
 	public GameObject(int x, int y, RenderingLayer renderingLayer, Handler handler) {
 		this.x = x;

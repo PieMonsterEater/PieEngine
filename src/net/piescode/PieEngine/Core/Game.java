@@ -67,7 +67,7 @@ public class Game extends Canvas implements Runnable {
 		currentMenu = mainM;
 		lastMenu = currentMenu;
 		
-		this.state = StateID.MainMenu;
+		Game.state = StateID.MainMenu;
 		
 		prevMenus = new ArrayList<Menu>();
 		
@@ -77,7 +77,7 @@ public class Game extends Canvas implements Runnable {
 	public void initGame() {
 		this.lastMenu = pMenu;
 		this.currentMenu = pMenu;
-		this.state = StateID.Play;
+		Game.state = StateID.Play;
 		handler.addObj(new Player(100, 100, RenderingLayer.PLAYER, handler));
 		ll.nextLevel();
 	}
@@ -85,6 +85,7 @@ public class Game extends Canvas implements Runnable {
 	public void destructGame() {
 		ll.reset();
 		if(handler.getSize() > 0) handler.removeObj(0);
+		handler.tick(); // This has to be here so the handler properly removes everything
 		this.lastMenu = mainM;
 		this.currentMenu = mainM;
 		Game.state = StateID.MainMenu;
@@ -137,7 +138,7 @@ public class Game extends Canvas implements Runnable {
 	}
 	
 	public void tick() {
-		if(this.state == StateID.Play) {
+		if(Game.state == StateID.Play) {
 		handler.tick();
 		for(int i =0; i < handler.getSize(); i++) {
 			if(handler.getObj(i).getID() == ID.Player) camera.tick(handler.getObj(i));
@@ -160,9 +161,7 @@ public class Game extends Canvas implements Runnable {
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, WIDTH, HEIGHT);
 		//////////////////////////////////////////
-		//if(this.state == StateID.MainMenu) mainM.render(g);
-		//if(this.state == StateID.InfoMenu) iMenu.render(g);
-		if(this.state == StateID.Play || this.state == StateID.PlayMenu) {
+		if(Game.state == StateID.Play || Game.state == StateID.PlayMenu) {
 		g2d.translate(camera.getX(), camera.getY());
 		handler.render(g);
 		g2d.translate(-camera.getX(), -camera.getY());
@@ -170,7 +169,7 @@ public class Game extends Canvas implements Runnable {
 			currentMenu.render(g);
 		}
 		
-		if(this.state == StateID.PlayMenu) {
+		if(Game.state == StateID.PlayMenu) {
 			g.setColor(new Color(0, 0, 0, 155));
 			g.fillRect(0, 0, WIDTH, HEIGHT);
 			currentMenu.render(g);
@@ -195,5 +194,5 @@ public class Game extends Canvas implements Runnable {
 		currentMenu = prevMenus.get(prevMenus.size() - 1);
 		prevMenus.remove(prevMenus.size() - 1);
 	}
-
+	
 }

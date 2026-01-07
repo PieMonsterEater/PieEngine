@@ -11,6 +11,7 @@ import java.awt.image.BufferedImage;
 
 import net.piescode.PieEngine.BuildingBlocks.Block;
 import net.piescode.PieEngine.BuildingBlocks.Ellipse;
+import net.piescode.PieEngine.Core.Game;
 import net.piescode.PieEngine.EntityCore.GameObject;
 import net.piescode.PieEngine.EntityCore.Handler;
 import net.piescode.PieEngine.EntityCore.ID;
@@ -75,6 +76,8 @@ public class Player extends GameObject {
 		
 		this.currentAnimation = IDLE_DOWN;
 		this.setAnimation(idleDown, 20);
+		
+		Game.keyInput.setPlayer(this);
 	}
 
 	public void tick() {
