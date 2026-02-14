@@ -46,7 +46,7 @@ public class Game extends Canvas implements Runnable {
 
 	public ArrayList<Menu> prevMenus;
 	
-	Camera camera = new Camera(0, 0);
+	public static Camera camera = new Camera(0, 0);
 	
 	public Game() {
 		handler = new Handler();

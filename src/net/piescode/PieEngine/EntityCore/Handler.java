@@ -1,9 +1,11 @@
 package net.piescode.PieEngine.EntityCore;
 
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.IdentityHashMap;
 
+import net.piescode.PieEngine.Core.Game;
 import net.piescode.PieEngine.Utils.Pair;
 import net.piescode.PieEngine.Visuals.RenderingLayer;
 
@@ -31,6 +33,7 @@ public class Handler {
 			for(int j = 0; j < renderLayer.size(); j++) {
 				GameObject tempObject = renderLayer.get(j);
 				
+				if(tempObject.getBounds().getBounds2D().intersects(new Rectangle(-1*Game.camera.getX(), -1*Game.camera.getY(), Game.WIDTH, Game.HEIGHT)))
 				if(tempObject.isRenderable) tempObject.render(g);
 			}
 		}
