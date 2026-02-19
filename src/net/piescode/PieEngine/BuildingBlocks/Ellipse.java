@@ -14,10 +14,10 @@ import net.piescode.PieEngine.Visuals.RenderingLayer;
 
 public class Ellipse extends GameObject {
 	
-	private float width = 0;
-	private float height = 0;
+	protected float width = 0;
+	protected float height = 0;
 	
-	private Ellipse2D.Float bounds;
+	protected Ellipse2D.Float bounds;
 
 	public Ellipse(int x, int y, float width, float height, BufferedImage sprite, RenderingLayer renderingLayer, Handler handler) {
 		super(x, y, renderingLayer, handler);
@@ -33,8 +33,7 @@ public class Ellipse extends GameObject {
 	}
 
 	public void tick() {
-		// TODO Auto-generated method stub
-		
+		createBounds();
 	}
 
 	public void render(Graphics g) {

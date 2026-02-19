@@ -17,11 +17,11 @@ import net.piescode.PieEngine.Visuals.RenderingLayer;
 
 public class Triangle extends GameObject {
 	
-	private Shape bounds = null;
-	private int projRectSize = 2;
-	private double thetaChange = 0;
+	protected Shape bounds = null;
+	protected int projRectSize = 2;
+	protected double thetaChange = 0; // Used for constant change
 	
-	private int offsetX, offsetY = 0;
+	protected int offsetX, offsetY = 0;
 	
 	Pair<Integer, Double> p2 = null; // Length and angle of point 2
 	Pair<Integer, Double> p3 = null; // Length and angle of point 3
@@ -63,6 +63,7 @@ public class Triangle extends GameObject {
 
 	public void tick() {
 		if(thetaChange != 0) {
+			// Remember that p2 and p3 are (length, angle) NOT (x, y)
 			p2 = forceAngle360(new Pair<Integer, Double>(p2.getX(), p2.getY() + thetaChange));
 			p3 = forceAngle360(new Pair<Integer, Double>(p3.getX(), p3.getY() + thetaChange));
 		}
@@ -227,6 +228,11 @@ public class Triangle extends GameObject {
 	
 	public double getThetaChange() {
 		return thetaChange;
+	}
+	
+	public void changeTheta(double thetaChange) {
+		p2 = forceAngle360(new Pair<Integer, Double>(p2.getX(), p2.getY() + thetaChange));
+		p3 = forceAngle360(new Pair<Integer, Double>(p3.getX(), p3.getY() + thetaChange));
 	}
 
 	

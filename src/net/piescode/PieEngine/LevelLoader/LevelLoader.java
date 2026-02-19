@@ -3,6 +3,7 @@ package net.piescode.PieEngine.LevelLoader;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
+import net.piescode.Example.Blocks.Fan;
 import net.piescode.PieEngine.BuildingBlocks.Block;
 import net.piescode.PieEngine.BuildingBlocks.Ellipse;
 import net.piescode.PieEngine.BuildingBlocks.Triangle;
@@ -88,6 +89,7 @@ public class LevelLoader {
 					if(red == 156 && green == 157 && blue == 128) handler.addObj(new Block(x*STANDARD_WIDTH, y*STANDARD_HEIGHT, STANDARD_WIDTH, STANDARD_HEIGHT, 0, null, RenderingLayer.FOREGROUND, handler));
 					if(red == 246 && green == 255 && blue == 0) handler.addObj(new Flag(x*STANDARD_WIDTH, y*STANDARD_HEIGHT, RenderingLayer.FOREGROUND, handler));
 					if(red == 50 && green == 50 && blue == 50) handler.addObj(new Ellipse(x*STANDARD_WIDTH, y*STANDARD_HEIGHT, 45f, 45f, Block.WOODEN_PLANK, RenderingLayer.FOREGROUND, handler));
+					if(red == 60 && green == 60 && blue == 60) handler.addObj(new Fan(x*STANDARD_WIDTH, y*STANDARD_HEIGHT, RenderingLayer.FOREGROUND, handler));
 					
 					if(red == 156 && green == 128 && blue == 146) {
 						Block b = new Block(x*STANDARD_WIDTH, y*STANDARD_HEIGHT, 90, 15, 0, null, RenderingLayer.FOREGROUND, handler);
