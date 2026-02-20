@@ -19,7 +19,7 @@ public class PlayMenu extends Menu {
 
 
 		playButton = new ReGameBtn(game, Game.WIDTH/4 - 50, 150, 375, 50, "Return to Game");
-		optionsButton = new MenuChangeButton(game, Game.WIDTH/4 + 50, 250, 190, 50, "Options", game.iMenu);
+		optionsButton = new MenuChangeButton(game, Game.WIDTH/4 + 50, 250, 190, 50, "Options", game.oMenu);
 		quitButton = new QtMainBtn(game, Game.WIDTH/3 + 35, 350, 100, 50, "Quit");
 		
 		buttons.add(playButton);
@@ -53,12 +53,6 @@ public class PlayMenu extends Menu {
 		g.setFont(fnt);
 		g.setColor(Color.WHITE);
 		g.drawString("Game Menu", Game.WIDTH/3 - 50, 50);
-		//g2d.draw(playButton);
-		//g.drawString("Play", playButton.x, playButton.y + 35);
-		//g2d.draw(helpButton);
-		//g.drawString("Info", infoButton.x, infoButton.y + 35);
-		//g2d.draw(quitButton);
-		//g.drawString("Quit", quitButton.x, quitButton.y + 35);
 		
 		for(int i = 0; i < buttons.size(); i++) buttons.get(i).render(g);
 		

@@ -161,7 +161,7 @@ public class Player extends GameObject {
 	public void createChildObjects() {
 		childBlock = new Block(getX(), getY(), 32, 48, 0, null, RenderingLayer.BACKGROUND, handler);
 		childBlock.isTickable = false;
-		childBlock.isRenderable = true;
+		childBlock.isRenderable = false;
 		childBlock.dontDestroyOnLoad = true;
 		
 		handler.addObj(childBlock);

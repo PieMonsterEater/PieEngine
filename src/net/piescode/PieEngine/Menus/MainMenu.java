@@ -12,9 +12,6 @@ import net.piescode.PieEngine.Core.Game;
 import net.piescode.PieEngine.Visuals.BufferedImageLoader;
 
 public class MainMenu extends Menu {
-	//private Rectangle playButtonRect;
-	//private Rectangle infoButtonRect;
-	//private Rectangle quitButtonRect;
 	
 	BufferedImageLoader bil = new BufferedImageLoader();
 	BufferedImage titleImage;
@@ -26,9 +23,6 @@ public class MainMenu extends Menu {
 	
 	public MainMenu(Game game) {
 		super(game);
-		//playButtonRect = new Rectangle(Game.WIDTH/3 + 35, 150, 100, 50);
-		//infoButtonRect = new Rectangle(Game.WIDTH/3 + 35, 250, 100, 50);
-		//quitButtonRect = new Rectangle(Game.WIDTH/3 + 35, 350, 100, 50);
 		
 		try {
 			titleImage = bil.loadImage("res/textures/Pie Engine Title.png");
@@ -39,7 +33,7 @@ public class MainMenu extends Menu {
 		
 		playButton = new PlayButton(game, Game.WIDTH/3 + 35, 100, 100, 50, "Play");
 		infoButton = new MenuChangeButton(game, Game.WIDTH/3 + 35, 175, 100, 50, "Info", game.iMenu);
-		optionsButton = new MenuChangeButton(game, Game.WIDTH/4 + 50, 250, 190, 50, "Options", game.iMenu);
+		optionsButton = new MenuChangeButton(game, Game.WIDTH/4 + 50, 250, 190, 50, "Options", game.oMenu);
 		quitButton = new QuitButton(game, Game.WIDTH/3 + 35, 325, 100, 50, "Quit");
 		
 		buttons.add(playButton);
@@ -56,14 +50,6 @@ public class MainMenu extends Menu {
 		g.drawImage(titleImage, Game.WIDTH/7 - 25, 0, 512, 90, null);
 		
 		g.setFont(fnt);
-		//g.setColor(Color.WHITE);
-		//g.drawString("PieEngine", Game.WIDTH/3, 50);
-		//g2d.draw(playButton);
-		//g.drawString("Play", playButton.x, playButton.y + 35);
-		//g2d.draw(helpButton);
-		//g.drawString("Info", infoButton.x, infoButton.y + 35);
-		//g2d.draw(quitButton);
-		//g.drawString("Quit", quitButton.x, quitButton.y + 35);
 		
 		for(int i = 0; i < buttons.size(); i++) buttons.get(i).render(g);
 		

@@ -33,6 +33,11 @@ public class KeyInput extends KeyAdapter {
 	public void keyPressed(KeyEvent e) {
 		int key = e.getKeyCode();
 		
+		if(key == KeyEvent.VK_ESCAPE) {
+			if(Game.state == StateID.Play) Game.state = StateID.PlayMenu;
+			game.backMenu();
+		}
+		
 		if(this.player == null) return;
 		
 		Player p = this.player;
@@ -44,11 +49,6 @@ public class KeyInput extends KeyAdapter {
 		if(key == KeyEvent.VK_SPACE) p.playSound("res/sounds/Shoot.wav");
 		
 		if(key == KeyEvent.VK_C) Game.ll.clear();
-		
-		if(key == KeyEvent.VK_ESCAPE) {
-			if(Game.state == StateID.Play) Game.state = StateID.PlayMenu;
-			game.setMenu(game.lastMenu);
-		}
 }
 	
 	public void keyReleased(KeyEvent e) {

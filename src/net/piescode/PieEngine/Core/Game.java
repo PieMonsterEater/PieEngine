@@ -2,6 +2,7 @@ package net.piescode.PieEngine.Core;
 
 import java.awt.Canvas;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
@@ -15,6 +16,7 @@ import net.piescode.PieEngine.LevelLoader.LevelLoader;
 import net.piescode.PieEngine.Menus.InfoMenu;
 import net.piescode.PieEngine.Menus.MainMenu;
 import net.piescode.PieEngine.Menus.Menu;
+import net.piescode.PieEngine.Menus.OptionsMenu;
 import net.piescode.PieEngine.Menus.PlayMenu;
 import net.piescode.PieEngine.Menus.StateID;
 import net.piescode.PieEngine.Player.Camera;
@@ -28,6 +30,7 @@ public class Game extends Canvas implements Runnable {
 	
 	public static final int SCALE=100;
 	public static final int WIDTH = 640, HEIGHT = 480;
+	public int FPS = 0;
 	public static StateID state;
 	public static LevelLoader ll;
 	public static KeyInput keyInput;
@@ -40,6 +43,7 @@ public class Game extends Canvas implements Runnable {
 	public MainMenu mainM;
 	public InfoMenu iMenu;
 	public PlayMenu pMenu;
+	public OptionsMenu oMenu;
 	
 	public Menu currentMenu;
 	public Menu lastMenu;
@@ -59,7 +63,7 @@ public class Game extends Canvas implements Runnable {
 		ll = new LevelLoader(handler);
 		//ll.nextLevel();
 		
-		
+		oMenu = new OptionsMenu(this);
 		iMenu = new InfoMenu(this);
 		mainM = new MainMenu(this);
 		pMenu = new PlayMenu(this);
@@ -128,6 +132,7 @@ public class Game extends Canvas implements Runnable {
 					
 					if (System.currentTimeMillis() - timer > 1000) {
 						timer += 1000;
+						FPS = frames;
 						System.out.println("FPS:" + frames);
 						frames = 0;
 					}
@@ -167,6 +172,10 @@ public class Game extends Canvas implements Runnable {
 		} else {
 			currentMenu.render(g);
 		}
+		
+		g.setColor(Color.WHITE);
+		g.setFont(new Font("Arial", 0, 12));
+		g.drawString("FPS: " + FPS, 15, 15);
 		
 		if(Game.state == StateID.PlayMenu) {
 			g.setColor(new Color(0, 0, 0, 155));
