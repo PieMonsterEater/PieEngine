@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Toolkit;
 import java.awt.image.BufferStrategy;
 import java.util.ArrayList;
 
@@ -125,10 +126,13 @@ public class Game extends Canvas implements Runnable {
 			while (delta >= 1) {
 				tick();
 				delta--;
+				render();
+				frames++;
 			}
-				if (running) 
-					render();
-					frames++;
+			
+				//if (running)
+					//render();
+					//frames++;
 					
 					if (System.currentTimeMillis() - timer > 1000) {
 						timer += 1000;
@@ -185,6 +189,9 @@ public class Game extends Canvas implements Runnable {
 		//////////////////////////////////////////
 		g.dispose();
 		bs.show();
+		
+		// This line is here to prevent stutters in rendering on Linux
+		Toolkit.getDefaultToolkit().sync();
 	}
 	
 	public static void main(String[] args) {
