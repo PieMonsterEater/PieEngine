@@ -5,6 +5,7 @@ import java.awt.event.KeyEvent;
 import net.piescode.PieEngine.Core.Game;
 import net.piescode.PieEngine.InputSystem.InputEvent;
 import net.piescode.PieEngine.InputSystem.InputListener;
+import net.piescode.PieEngine.InputSystem.KeyInput;
 import net.piescode.PieEngine.Menus.StateID;
 
 public class PlayerInputHandler implements InputListener {
@@ -33,6 +34,7 @@ public class PlayerInputHandler implements InputListener {
 		Game.keyInput.addKeyInput("PLAY_SOUND", KeyEvent.VK_L);
 		Game.keyInput.addKeyInput("CHANGE_UP", KeyEvent.VK_P);
 		Game.keyInput.addKeyInput("CHANGE_RIGHT", KeyEvent.VK_K);
+		Game.keyInput.addKeyInput("RESET_KEYS", KeyInput.MOUSE5);
 		
 		Game.addInputListener(this);
 	}
@@ -47,8 +49,9 @@ public class PlayerInputHandler implements InputListener {
 		if(ie.getInputName() == "PLAY_SOUND") p.playSound("res/sounds/Shoot.wav");
 		
 		if(ie.getInputName() == "CLEAR_LEVEL") Game.ll.clear();
-		if(ie.getInputName() == "CHANGE_UP") Game.mouseInput.changeKeyInput("WALK_UP", 1);
+		if(ie.getInputName() == "CHANGE_UP") Game.keyInput.changeKeyInput("WALK_UP", KeyInput.LEFT_CLICK);
 		if(ie.getInputName() == "CHANGE_RIGHT") Game.keyInput.changeKeyInput("WALK_RIGHT", KeyEvent.VK_H);
+		if(ie.getInputName() == "RESET_KEYS") Game.keyInput.resetToDefaults();
 	}
 	
 	public void onKeyReleased(InputEvent ie) {

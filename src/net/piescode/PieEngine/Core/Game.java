@@ -18,7 +18,6 @@ import net.piescode.PieEngine.EntityCore.Handler;
 import net.piescode.PieEngine.EntityCore.ID;
 import net.piescode.PieEngine.InputSystem.InputListener;
 import net.piescode.PieEngine.InputSystem.KeyInput;
-import net.piescode.PieEngine.InputSystem.MouseInput;
 import net.piescode.PieEngine.LevelLoader.LevelLoader;
 import net.piescode.PieEngine.Menus.InfoMenu;
 import net.piescode.PieEngine.Menus.MainMenu;
@@ -36,7 +35,6 @@ public class Game extends Canvas implements Runnable {
 	public static StateID state;
 	public static LevelLoader ll;
 	public static KeyInput keyInput;
-	public static MouseInput mouseInput;
 	public static boolean showDebug = false;
 	public boolean running = false;
 	
@@ -64,10 +62,9 @@ public class Game extends Canvas implements Runnable {
 		//handler.addObj(new Enemy(250, 250, handler));
 		cgi = new CentralGameInputs(this);
 		keyInput = new KeyInput(handler, this);
-		mouseInput = new MouseInput(handler, this);
 		this.addKeyListener(keyInput);
-		this.addMouseListener(mouseInput);
-		this.addMouseMotionListener(mouseInput);
+		this.addMouseListener(keyInput);
+		this.addMouseMotionListener(keyInput);
 		
 		// Default key values for every game
 		keyInput.addKeyInput("MENU_BACK", KeyEvent.VK_ESCAPE);
