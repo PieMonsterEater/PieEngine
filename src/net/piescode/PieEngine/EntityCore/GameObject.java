@@ -234,7 +234,9 @@ public abstract class GameObject {
 		pushX /= pushLength;
 		pushY /= pushLength;
 		
-		// Find which is smaller, and apply the push vector at that length
+		// Find the shortest distance to push the entity so that it is no longer in the triangle
+		// Moving the entity in the direction of the vector is great, but the objective is to make the overlap area 0
+		// Since the overlap area is 0 if the x OR the y of the overlap is 0, we find which one is shorter and then use that
 		movXFlag = overlapArea.getBounds().width/pushX; // How far in the push direction do I need to move to zero-out x-axis overlap
 		movYFlag = overlapArea.getBounds().height/pushY; // How far in the push direction do I need to move to zero-out y-axis overlap
 		

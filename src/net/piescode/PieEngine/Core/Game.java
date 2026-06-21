@@ -6,13 +6,19 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Toolkit;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferStrategy;
 import java.util.ArrayList;
 
+import net.piescode.Example.Player.Camera;
+import net.piescode.Example.Player.Player;
 import net.piescode.PieEngine.Audio.MusicPlayer;
 import net.piescode.PieEngine.Entities.Enemy;
 import net.piescode.PieEngine.EntityCore.Handler;
 import net.piescode.PieEngine.EntityCore.ID;
+import net.piescode.PieEngine.InputSystem.InputListener;
+import net.piescode.PieEngine.InputSystem.KeyInput;
+import net.piescode.PieEngine.InputSystem.MouseInput;
 import net.piescode.PieEngine.LevelLoader.LevelLoader;
 import net.piescode.PieEngine.Menus.InfoMenu;
 import net.piescode.PieEngine.Menus.MainMenu;
@@ -20,11 +26,6 @@ import net.piescode.PieEngine.Menus.Menu;
 import net.piescode.PieEngine.Menus.OptionsMenu;
 import net.piescode.PieEngine.Menus.PlayMenu;
 import net.piescode.PieEngine.Menus.StateID;
-import net.piescode.PieEngine.Player.Camera;
-import net.piescode.PieEngine.Player.KeyInput;
-import net.piescode.PieEngine.Player.MouseInput;
-import net.piescode.PieEngine.Player.MouseMoveInput;
-import net.piescode.PieEngine.Player.Player;
 import net.piescode.PieEngine.Visuals.RenderingLayer;
 
 public class Game extends Canvas implements Runnable {
@@ -35,11 +36,14 @@ public class Game extends Canvas implements Runnable {
 	public static StateID state;
 	public static LevelLoader ll;
 	public static KeyInput keyInput;
+	public static MouseInput mouseInput;
+	public static boolean showDebug = false;
 	public boolean running = false;
 	
 	private Thread thread;
 	private Handler handler;
 	private MusicPlayer mp;
+	private CentralGameInputs cgi;
 	
 	public MainMenu mainM;
 	public InfoMenu iMenu;
@@ -50,6 +54,7 @@ public class Game extends Canvas implements Runnable {
 	public Menu lastMenu;
 
 	public ArrayList<Menu> prevMenus;
+	public static final ArrayList<InputListener> listeners = new ArrayList<InputListener>();
 	
 	public static Camera camera = new Camera(0, 0);
 	
@@ -57,10 +62,17 @@ public class Game extends Canvas implements Runnable {
 		handler = new Handler();
 		//handler.addObj(new Player(100, 100, handler));
 		//handler.addObj(new Enemy(250, 250, handler));
+		cgi = new CentralGameInputs(this);
 		keyInput = new KeyInput(handler, this);
+		mouseInput = new MouseInput(handler, this);
 		this.addKeyListener(keyInput);
-		this.addMouseListener(new MouseInput(handler, this));
-		this.addMouseMotionListener(new MouseMoveInput(this));
+		this.addMouseListener(mouseInput);
+		this.addMouseMotionListener(mouseInput);
+		
+		// Default key values for every game
+		keyInput.addKeyInput("MENU_BACK", KeyEvent.VK_ESCAPE);
+		keyInput.addKeyInput("SHOW_DEBUG", KeyEvent.VK_F3);
+		
 		ll = new LevelLoader(handler);
 		//ll.nextLevel();
 		
@@ -71,6 +83,7 @@ public class Game extends Canvas implements Runnable {
 		
 		currentMenu = mainM;
 		lastMenu = currentMenu;
+		currentMenu.setActive(true);
 		
 		Game.state = StateID.MainMenu;
 		
@@ -80,8 +93,10 @@ public class Game extends Canvas implements Runnable {
 	}
 	
 	public void initGame() {
+		currentMenu.setActive(false);
 		this.lastMenu = pMenu;
 		this.currentMenu = pMenu;
+		currentMenu.setActive(true);
 		Game.state = StateID.Play;
 		handler.addObj(new Player(100, 100, RenderingLayer.PLAYER, handler));
 		ll.nextLevel();
@@ -90,8 +105,10 @@ public class Game extends Canvas implements Runnable {
 	public void destructGame() {
 		ll.reset();
 		handler.tick(); // This has to be here so the handler properly removes everything
+		currentMenu.setActive(false);
 		this.lastMenu = mainM;
 		this.currentMenu = mainM;
+		currentMenu.setActive(true);
 		Game.state = StateID.MainMenu;
 	}
 	
@@ -177,9 +194,12 @@ public class Game extends Canvas implements Runnable {
 			currentMenu.render(g);
 		}
 		
-		g.setColor(Color.WHITE);
-		g.setFont(new Font("Arial", 0, 12));
-		g.drawString("FPS: " + FPS, 15, 15);
+		
+		if(showDebug) {
+			g.setColor(Color.WHITE);
+			g.setFont(new Font("Arial", 0, 12));
+			g.drawString("FPS: " + FPS, 15, 15);
+		}
 		
 		if(Game.state == StateID.PlayMenu) {
 			g.setColor(new Color(0, 0, 0, 155));
@@ -199,15 +219,28 @@ public class Game extends Canvas implements Runnable {
 	}
 	
 	public void setMenu(Menu menu) {
+		currentMenu.setActive(false);
 		prevMenus.add(currentMenu);
 		currentMenu = menu;
+		currentMenu.setActive(true);
 	}
 	
 	public void backMenu() {
 		if(prevMenus.size() == 0) return;
 		
+		currentMenu.setActive(false);
 		currentMenu = prevMenus.get(prevMenus.size() - 1);
 		prevMenus.remove(prevMenus.size() - 1);
+		currentMenu.setActive(true);
 	}
 	
+	// Subscribes listener to input events
+	public static void addInputListener(InputListener il) {
+		listeners.add(il);
+	}
+	
+	//Unsubscribes listner to input events
+	public static void removeInputListener(InputListener il) {
+		listeners.remove(il);
+	}
 }

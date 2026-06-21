@@ -24,7 +24,6 @@ public class InfoMenu extends Menu {
 
 	public void tick() {
 		
-		
 	}
 	
 }

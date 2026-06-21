@@ -9,11 +9,11 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
+import net.piescode.Example.Player.Player;
 import net.piescode.PieEngine.EntityCore.GameObject;
 import net.piescode.PieEngine.EntityCore.Handler;
 import net.piescode.PieEngine.EntityCore.ID;
 import net.piescode.PieEngine.LevelLoader.LevelLoader;
-import net.piescode.PieEngine.Player.Player;
 import net.piescode.PieEngine.Visuals.RenderingLayer;
 import net.piescode.PieEngine.Visuals.SpriteSheet;
 

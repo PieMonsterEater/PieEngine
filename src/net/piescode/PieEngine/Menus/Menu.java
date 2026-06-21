@@ -4,10 +4,11 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 
 import net.piescode.PieEngine.Core.Game;
+import net.piescode.PieEngine.InputSystem.InputEvent;
+import net.piescode.PieEngine.InputSystem.InputListener;
 
-public abstract class Menu {
-	
-	public boolean mouseActivated = false;
+public abstract class Menu implements InputListener {
+	public boolean isActive = false;
 	
 	private int mx = 0, my = 0;
 
@@ -19,15 +20,10 @@ public abstract class Menu {
 	
 	public Menu(Game game) {
 		this.game = game;
+		
+		Game.listeners.add(this);
 	}
 	
-	public void setMouseActive(boolean active) {
-		mouseActivated = active;
-	}
-	
-	public boolean getMouseActive() {
-		return mouseActivated;
-	}
 	
 	public int getMouseX() {
 		return mx;
@@ -43,5 +39,18 @@ public abstract class Menu {
 	
 	public void setMouseY(int my) {
 		this.my = my;
+	}
+	
+	public void onMouseMoved(int x, int y) {
+		setMouseX(x);
+		setMouseY(y);
+	}
+	
+	public void setActive(boolean active) {
+		isActive = active;
+	}
+	
+	public boolean getActive() {
+		return isActive;
 	}
 }

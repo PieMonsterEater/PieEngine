@@ -16,7 +16,6 @@ public abstract class Button {
 	protected int x, y, width, height;
 	protected Rectangle rect;
 	protected String text;
-	protected Boolean mouseActivated = false;
 	protected Game game;
 	
 	private int mx = 0, my = 0;

@@ -1,4 +1,4 @@
-package net.piescode.PieEngine.Player;
+package net.piescode.Example.Player;
 
 import net.piescode.PieEngine.Core.Game;
 import net.piescode.PieEngine.EntityCore.GameObject;

@@ -9,6 +9,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import net.piescode.PieEngine.Core.Game;
+import net.piescode.PieEngine.InputSystem.InputEvent;
 import net.piescode.PieEngine.Visuals.BufferedImageLoader;
 
 public class MainMenu extends Menu {
@@ -58,21 +59,21 @@ public class MainMenu extends Menu {
 		g.drawString("Version 1_03", 500, 430);
 	}
 
-	public void tick() {
+	public void tick() {			
 		for(int i = 0; i < buttons.size(); i++) {
 			buttons.get(i).setMouseX(getMouseX());
 			buttons.get(i).setMouseY(getMouseY());
 		}
+	}
+	
+	public void onMouseClicked(InputEvent ie, int x, int y) {
+		if(!isActive) return;
 		
-		if(mouseActivated) {
-			Rectangle mRect = new Rectangle(getMouseX(), getMouseY(), 1, 1);
-			for(int i = 0; i < buttons.size(); i++) {
-				buttons.get(i).mouseActivated = mouseActivated;
-				if(buttons.get(i).getRectangle().intersects(mRect)) buttons.get(i).action();
-			}
-			
-			mouseActivated = false;
+		//System.out.println("Main Menu Clicked firing!");
+		
+		Rectangle mRect = new Rectangle(getMouseX(), getMouseY(), 1, 1);
+		for(int i = 0; i < buttons.size(); i++) {
+			if(buttons.get(i).getRectangle().intersects(mRect)) buttons.get(i).action();
 		}
-		
 	}
 }

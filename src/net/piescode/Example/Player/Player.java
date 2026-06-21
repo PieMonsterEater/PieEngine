@@ -1,4 +1,4 @@
-package net.piescode.PieEngine.Player;
+package net.piescode.Example.Player;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -37,12 +37,15 @@ public class Player extends GameObject {
 	
 	Block childBlock = null;
 	
+	public PlayerInputHandler inputHandler;
+	
 	public Player(int x, int y, RenderingLayer renderingLayer, Handler handler) {
 		super(x, y, renderingLayer, handler);
 		this.handler = handler;
 		this.setID(ID.Player);
 		this.setSpriteSheet("res/textures/Guy.png");
 		this.dontDestroyOnLoad = true;
+		inputHandler = new PlayerInputHandler(this);
 		
 		idleDown[0] = SpriteSheet.grabSprite(spriteSheet, 0, 0, 32, 32);
 		idleDown[1] = SpriteSheet.grabSprite(spriteSheet, 32, 0, 32, 32);
@@ -78,8 +81,6 @@ public class Player extends GameObject {
 		
 		this.currentAnimation = IDLE_DOWN;
 		this.setAnimation(idleDown, 20);
-		
-		Game.keyInput.setPlayer(this);
 		
 		createChildObjects();
 	}
@@ -152,10 +153,6 @@ public class Player extends GameObject {
 
 	public Rectangle getBounds() {
 		return new Rectangle(x, y, 32, 48);
-	}
-	
-	public void handleKeyPresses() {
-		
 	}
 
 	public void createChildObjects() {

@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
 import net.piescode.PieEngine.Core.Game;
+import net.piescode.PieEngine.InputSystem.InputEvent;
 
 public class PlayMenu extends Menu {
 	
@@ -32,17 +33,6 @@ public class PlayMenu extends Menu {
 			buttons.get(i).setMouseX(getMouseX());
 			buttons.get(i).setMouseY(getMouseY());
 		}
-		
-		if(mouseActivated) {
-			Rectangle mRect = new Rectangle(getMouseX(), getMouseY(), 1, 1);
-			for(int i = 0; i < buttons.size(); i++) {
-				buttons.get(i).mouseActivated = mouseActivated;
-				if(buttons.get(i).getRectangle().intersects(mRect)) buttons.get(i).action();
-			}
-			
-			mouseActivated = false;
-		}
-		
 	}
 
 	public void render(Graphics g) {
@@ -59,6 +49,17 @@ public class PlayMenu extends Menu {
 		g.setColor(Color.WHITE);
 		g.setFont(fnt1);
 		g.drawString("Version 1_03", 500, 430);
+	}
+	
+	public void onMouseClicked(InputEvent ie, int x, int y) {
+		if(!isActive) return;
+		
+		//System.out.println("Play Menu Clicked firing!");
+		
+		Rectangle mRect = new Rectangle(getMouseX(), getMouseY(), 1, 1);
+		for(int i = 0; i < buttons.size(); i++) {
+			if(buttons.get(i).getRectangle().intersects(mRect)) buttons.get(i).action();
+		}
 	}
 
 }
