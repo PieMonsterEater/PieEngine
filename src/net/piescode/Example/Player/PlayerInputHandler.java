@@ -35,6 +35,7 @@ public class PlayerInputHandler implements InputListener {
 		Game.keyInput.addKeyInput("CHANGE_UP", KeyEvent.VK_P);
 		Game.keyInput.addKeyInput("CHANGE_RIGHT", KeyEvent.VK_K);
 		Game.keyInput.addKeyInput("RESET_KEYS", KeyInput.MOUSE5);
+		Game.keyInput.addKeyInput("LIST_KEYS", KeyInput.MOUSE4);
 		
 		Game.addInputListener(this);
 	}
@@ -52,6 +53,18 @@ public class PlayerInputHandler implements InputListener {
 		if(ie.getInputName() == "CHANGE_UP") Game.keyInput.changeKeyInput("WALK_UP", KeyInput.LEFT_CLICK);
 		if(ie.getInputName() == "CHANGE_RIGHT") Game.keyInput.changeKeyInput("WALK_RIGHT", KeyEvent.VK_H);
 		if(ie.getInputName() == "RESET_KEYS") Game.keyInput.resetToDefaults();
+		if(ie.getInputName() == "LIST_KEYS") {
+			System.out.println("PlayerInputHandler: WALK_UP: " + Game.keyInput.getKeyByInputName("WALK_UP"));
+			System.out.println("PlayerInputHandler: WALK_DOWN: " + Game.keyInput.getKeyByInputName("WALK_DOWN"));
+			System.out.println("PlayerInputHandler: WALK_LEFT: " + Game.keyInput.getKeyByInputName("WALK_LEFT"));
+			System.out.println("PlayerInputHandler: WALK_RIGHT: " + Game.keyInput.getKeyByInputName("WALK_RIGHT"));
+			System.out.println("PlayerInputHandler: CLEAR_LEVEL: " + Game.keyInput.getKeyByInputName("CLEAR_LEVEL"));
+			System.out.println("PlayerInputHandler: PLAY_SOUND: " + Game.keyInput.getKeyByInputName("PLAY_SOUND"));
+			System.out.println("PlayerInputHandler: CHANGE_UP: " + Game.keyInput.getKeyByInputName("CHANGE_UP"));
+			System.out.println("PlayerInputHandler: CHANGE_RIGHT: " + Game.keyInput.getKeyByInputName("CHANGE_RIGHT"));
+			System.out.println("PlayerInputHandler: RESET_KEYS: " + Game.keyInput.getKeyByInputName("RESET_KEYS"));
+			System.out.println("PlayerInputHandler: LIST_KEYS: " + Game.keyInput.getKeyByInputName("LIST_KEYS"));
+		}
 	}
 	
 	public void onKeyReleased(InputEvent ie) {

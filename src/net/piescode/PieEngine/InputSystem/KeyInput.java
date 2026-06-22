@@ -61,7 +61,7 @@ public class KeyInput extends KeyAdapter implements MouseListener, MouseMotionLi
 	
 	public void keyPressed(KeyEvent e) {
 		int key = e.getKeyCode();
-		char keyChar = e.getKeyChar();
+		String keyChar = e.getKeyChar() + "";
 		
 		String inputName = keyToName.get(key);
 		//System.out.println("Key Input Name: " + inputName);
@@ -73,7 +73,7 @@ public class KeyInput extends KeyAdapter implements MouseListener, MouseMotionLi
 	
 	public void keyReleased(KeyEvent e) {
 		int key = e.getKeyCode();
-		char keyChar = e.getKeyChar();
+		String keyChar = e.getKeyChar() + "";
 		
 		String inputName = keyToName.get(key);
 		
@@ -84,19 +84,21 @@ public class KeyInput extends KeyAdapter implements MouseListener, MouseMotionLi
 	
 	public void keyTyped(KeyEvent e) {
 		int key = e.getKeyCode();
-		char keyChar = e.getKeyChar();
+		String keyChar = e.getKeyChar() + "";
 		
 		for(int i = 0; i < Game.listeners.size(); i++) {
 			Game.listeners.get(i).onKeyTyped(new InputEvent("", key, keyChar, -1));
 		}
 	}
 	
+	// Add 5000 to each mouse click code to ensure there is no overlap with standard KeyEvent key codes
+	
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		int key = e.getButton() + 5000;
 		
 		for(int i = 0; i < Game.listeners.size(); i++) {
-			Game.listeners.get(i).onMouseClicked(new InputEvent("", -1, 'A', key), e.getX(), e.getY());
+			Game.listeners.get(i).onMouseClicked(new InputEvent("", -1, "A", key), e.getX(), e.getY());
 		}
 	}
 
@@ -119,7 +121,7 @@ public class KeyInput extends KeyAdapter implements MouseListener, MouseMotionLi
 		//System.out.println("Key Input Name: " + inputName);
 		
 		for(int i = 0; i < Game.listeners.size(); i++) {
-			Game.listeners.get(i).onKeyPressed(new InputEvent(inputName, -1, 'A', key));
+			Game.listeners.get(i).onKeyPressed(new InputEvent(inputName, -1, "A", key));
 		}
 	}
 
@@ -130,7 +132,7 @@ public class KeyInput extends KeyAdapter implements MouseListener, MouseMotionLi
 		//System.out.println("Key Input Name: " + inputName);
 		
 		for(int i = 0; i < Game.listeners.size(); i++) {
-			Game.listeners.get(i).onKeyReleased(new InputEvent(inputName, -1, 'A', key));
+			Game.listeners.get(i).onKeyReleased(new InputEvent(inputName, -1, "A", key));
 		}
 	}
 	
@@ -213,5 +215,21 @@ public class KeyInput extends KeyAdapter implements MouseListener, MouseMotionLi
 	
 	public boolean isKeyboardInput(String inputName) {
 		return nameToKey.get(inputName) != null;
+	}
+	
+	public String getKeyByInputName(String inputName) {
+		int keyCode = nameToKey.get(inputName);
+		if(keyCode > 4999) {
+			if(keyCode == 5001) return "Left Click";
+			if(keyCode == 5002) return "Middle Click";
+			if(keyCode == 5003) return "Right CLick";
+			return "Mouse " + (keyCode - 5002);
+		}
+		
+		return KeyEvent.getKeyText(keyCode);
+	}
+	
+	public String getInputNameByKey(int keyCode) {
+		return keyToName.get(keyCode);
 	}
 }

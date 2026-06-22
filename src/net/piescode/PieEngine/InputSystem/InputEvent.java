@@ -4,9 +4,9 @@ public class InputEvent {
 	private String inputName = "";
 	private int keyCode = 0;
 	private int mouseCode = 0;
-	private char keyChar = 0;
+	private String keyChar = "";
 	
-	public InputEvent(String inputName, int keyCode, char keyChar, int mouseCode) {
+	public InputEvent(String inputName, int keyCode, String keyChar, int mouseCode) {
 		this.inputName = inputName;
 		this.keyCode = keyCode;
 		this.mouseCode = mouseCode;
@@ -25,7 +25,7 @@ public class InputEvent {
 		return mouseCode;
 	}
 	
-	public char getKeyChar() {
+	public String getKeyChar() {
 		return keyChar;
 	}
 }
