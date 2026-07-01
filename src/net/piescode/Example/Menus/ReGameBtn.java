@@ -1,6 +1,8 @@
-package net.piescode.PieEngine.Menus;
+package net.piescode.Example.Menus;
 
 import net.piescode.PieEngine.Core.Game;
+import net.piescode.PieEngine.Menus.Button;
+import net.piescode.PieEngine.Menus.StateID;
 
 public class ReGameBtn extends Button {
 

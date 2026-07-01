@@ -10,6 +10,10 @@ import java.awt.event.KeyEvent;
 import java.awt.image.BufferStrategy;
 import java.util.ArrayList;
 
+import net.piescode.Example.Menus.InfoMenu;
+import net.piescode.Example.Menus.MainMenu;
+import net.piescode.Example.Menus.OptionsMenu;
+import net.piescode.Example.Menus.PlayMenu;
 import net.piescode.Example.Player.Camera;
 import net.piescode.Example.Player.Player;
 import net.piescode.PieEngine.Audio.MusicPlayer;
@@ -19,11 +23,7 @@ import net.piescode.PieEngine.EntityCore.ID;
 import net.piescode.PieEngine.InputSystem.InputListener;
 import net.piescode.PieEngine.InputSystem.KeyInput;
 import net.piescode.PieEngine.LevelLoader.LevelLoader;
-import net.piescode.PieEngine.Menus.InfoMenu;
-import net.piescode.PieEngine.Menus.MainMenu;
 import net.piescode.PieEngine.Menus.Menu;
-import net.piescode.PieEngine.Menus.OptionsMenu;
-import net.piescode.PieEngine.Menus.PlayMenu;
 import net.piescode.PieEngine.Menus.StateID;
 import net.piescode.PieEngine.Visuals.RenderingLayer;
 

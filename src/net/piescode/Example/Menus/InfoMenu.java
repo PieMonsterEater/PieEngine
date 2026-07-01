@@ -1,10 +1,11 @@
-package net.piescode.PieEngine.Menus;
+package net.piescode.Example.Menus;
 
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 
 import net.piescode.PieEngine.Core.Game;
+import net.piescode.PieEngine.Menus.Menu;
 
 public class InfoMenu extends Menu {
 	
